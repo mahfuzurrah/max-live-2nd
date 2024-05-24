@@ -1,0 +1,263 @@
+.side_navbar {
+  height: 100vh;
+  position: fixed !important;
+  top: 0;
+  padding: 16px;
+  background: var(--white-color) !important;
+  z-index: 999;
+  min-width: 250px;
+}
+
+.ant-layout {
+  background: transparent;
+}
+
+.logo {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.side_nav_menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.side_nav_menu .side_nav_list {
+  position: relative;
+}
+.side_nav_menu .side_nav_list.active::after {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 10px;
+  width: 5px;
+  height: 55%;
+  background: var(--primary-blue);
+  border-radius: 0px 2px 2px 0px;
+}
+
+.side_nav_menu .side_nav_list .nav-link {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: var(--font-bold);
+  color: #2c2e30;
+  font-family: var(--body-font) !important;
+}
+
+.side_nav_menu .side_nav_list:hover .nav-link,
+.side_nav_menu .side_nav_list.active .nav-link {
+  background: #e6f0ff;
+  transition: all 0.3s ease-in-out;
+  color: var(--primary-blue);
+}
+
+.side_nav_menu .side_nav_list:hover .nav-link .icon,
+.side_nav_menu .side_nav_list.active .nav-link .icon {
+  color: var(--primary-blue);
+}
+
+.side_navbar .btn {
+  width: 100%;
+  margin-top: 20px;
+  align-items: flex-flex-start;
+  justify-content: flex-flex-start;
+  background: var(--white-blue);
+  color: var(--title-color);
+}
+
+/* Top Navbar */
+.ant-layout-header {
+  line-height: normal;
+}
+.main_body {
+  padding-left: 250px;
+  width: 100%;
+}
+
+.main_body .top_navbar {
+  height: 75px;
+  position: sticky;
+  top: 0;
+  background: var(--body-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+  padding: 20px;
+  z-index: 99;
+}
+
+.main_body .top_navbar .title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.main_body .top_navbar .title img {
+  border-radius: 100px;
+  object-fit: cover;
+}
+
+.main_body .top_navbar .title p.name {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+}
+
+.main_body .top_navbar .title p.name span {
+  font-size: 12px;
+  color: var(--desc-color);
+}
+
+.main_body .top_navbar .nav_menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.main_body .top_navbar .nav_menu .icons {
+  font-size: 24px;
+  color: var(--title-color);
+}
+.main_body .top_navbar .nav_menu .nav_link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.main_body .top_navbar .nav_menu .nav_link.btn {
+  background: var(--white-color);
+  color: var(--title-color);
+}
+.main_body .top_navbar .nav_menu .nav_link.btn:hover {
+  color: var(--title-color) !important;
+}
+
+.header_dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 12px;
+  background: transparent;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+:where(.css-dev-only-do-not-override-17seli4).ant-dropdown .ant-dropdown-menu,
+:where(.css-dev-only-do-not-override-17seli4).ant-dropdown-menu-submenu
+  .ant-dropdown-menu {
+  padding: 12px;
+}
+.ant-dropdown-menu-title-content a {
+  font-size: var(--normal-font-size);
+}
+
+.toggle_btn {
+  display: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+}
+
+.nav .right_area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav .right_area .notifi {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-color);
+  border-radius: 100px;
+  position: relative;
+}
+
+.nav .right_area .notifi .dot {
+  position: absolute;
+  top: 15px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--white-color);
+  background: var(--primary-blue);
+  border-radius: 100px;
+}
+
+.nav .right_area .notifi .icons {
+  font-size: 25px;
+}
+
+@media screen and (max-width: 991px) {
+  .main_body {
+    padding: 0;
+  }
+  .toggle_btn {
+    display: block;
+    color: var(--title-color);
+  }
+
+  .side_navbar {
+    position: fixed !important;
+    left: 0;
+  }
+
+  .side_navbar.sider-collapsed {
+    left: -100%;
+    position: fixed !important;
+  }
+
+  .mobile_logo {
+    display: block;
+  }
+
+  .main_body .top_navbar {
+    justify-content: space-between !important;
+    z-index: 999999;
+    background: var(--white-color);
+  }
+  .header_dropdown {
+    background: transparent;
+  }
+  .mb_hide {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .header_dropdown {
+    gap: 0;
+    position: relative;
+    left: 10px;
+    margin-left: -30px;
+  }
+
+  .dashboard .card {
+    padding: 20px;
+  }
+
+  .dashboard .card img {
+    width: 35px;
+  }
+}
