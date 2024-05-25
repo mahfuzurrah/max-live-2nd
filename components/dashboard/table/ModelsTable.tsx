@@ -1,8 +1,8 @@
-import { Image, Switch, Table } from "antd";
 import userImage from "@/public/images/user.png";
-import { ReactNode } from "react";
+import { Image, Switch, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { StaticImageData } from "next/image";
+import { ReactNode } from "react";
 
 interface ModelData {
   key: string;
@@ -25,10 +25,10 @@ const columns: ColumnsType<ModelData> = [
     dataIndex: "modelName",
     sorter: (a, b) => a.modelName.localeCompare(b.modelName),
     render: (text, record) => (
-      <>
+      <div className="flex items-center justify-center">
         <Image src={record.modelImage.src} width={50} preview={false} />
         <span style={{ marginLeft: 10 }}>{text}</span>
-      </>
+      </div>
     ),
   },
   {
@@ -120,7 +120,11 @@ const ModelsTable: React.FC = () => (
     columns={columns}
     dataSource={data}
     onChange={onChange}
-    pagination={{ pageSize: 10 }}
+    pagination={{
+      pageSize: 10,
+      showSizeChanger: true,
+      pageSizeOptions: ["2", "5", "10", "20"],
+    }}
     scroll={{
       x: 991,
     }}

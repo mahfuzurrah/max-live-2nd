@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { FaClipboardList } from "react-icons/fa6";
 import { IoGrid } from "react-icons/io5";
 import { TbSettingsCog } from "react-icons/tb";
 import { TiFlowSwitch } from "react-icons/ti";
@@ -66,24 +65,24 @@ export default function DashboardSidebar({
       icon: <IoGrid className="icons" />,
       route: "/dashboard",
     },
-    {
-      id: 2,
-      label: "Datasets",
-      icon: <FaClipboardList className="icons" />,
-      route: "/dashboard/datasets",
-    },
+    // {
+    //   id: 2,
+    //   label: "Datasets",
+    //   icon: <FaClipboardList className="icons" />,
+    //   route: "/dashboard/datasets",
+    // },
     // {
     //   id: 3,
     //   label: "Models",
     //   icon: <FaUserCog className="icons" />,
     //   route: "/dashboard/models",
     // },
-    {
-      id: 4,
-      label: "Wallet",
-      icon: <FaUser className="icons" />,
-      route: "/dashboard/wallet",
-    },
+    // {
+    //   id: 4,
+    //   label: "Wallet",
+    //   icon: <FaUser className="icons" />,
+    //   route: "/dashboard/wallet",
+    // },
     {
       id: 7,
       label: "Flows",

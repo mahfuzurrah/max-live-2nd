@@ -1,7 +1,6 @@
-import React from "react";
 import ArroUp from "@/public/images/up.svg";
-import Image from "next/image";
 import { CardItem } from "@/types";
+import Image from "next/image";
 
 const OverviewCard = ({ imgSrc, title, number, gain }: CardItem) => {
   return (
@@ -11,7 +10,7 @@ const OverviewCard = ({ imgSrc, title, number, gain }: CardItem) => {
         <div className="active-content">
           <p className="active-text">{title}</p>
           <h4>{number}</h4>
-          <div className="card-btn">
+          <div className="flex card-btn">
             <Image src={ArroUp} width="16" height="16" alt="Arrow Up" />
             <span>{gain}</span> gain this month
           </div>
