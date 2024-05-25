@@ -1,4 +1,4 @@
-import userImage from "@/public/images/user.png";
+import userImage from "@/public/images/Avatar.svg";
 import { Image, Switch, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { StaticImageData } from "next/image";
@@ -6,10 +6,10 @@ import { ReactNode } from "react";
 
 interface ModelData {
   key: string;
-  modelName: string;
-  modelImage: StaticImageData;
-  parameters: ReactNode;
-  modelRScore: string;
+  flowName: string;
+  flowImage: StaticImageData;
+  steps: ReactNode;
+  runned: string;
   updateDate: string;
 }
 
@@ -22,40 +22,41 @@ const columns: ColumnsType<ModelData> = [
   },
   {
     title: "Model name",
-    dataIndex: "modelName",
-    sorter: (a, b) => a.modelName.localeCompare(b.modelName),
+    dataIndex: "flowName",
     render: (text, record) => (
-      <div className="flex items-center justify-center">
-        <Image src={record.modelImage.src} width={50} preview={false} />
+      <div className="flex items-center ">
+        <Image src={record.flowImage.src} width={50} preview={false} />
         <span style={{ marginLeft: 10 }}>{text}</span>
       </div>
     ),
   },
   {
-    title: "Parameters",
-    dataIndex: "parameters",
-    sorter: (a, b) => Number(a.parameters) - Number(b.parameters),
+    title: "Steps",
+    dataIndex: "steps",
   },
   {
     title: "Model R score",
-    dataIndex: "modelRScore",
-    sorter: (a, b) => Number(a.modelRScore) - Number(b.modelRScore),
+    dataIndex: "runned",
+    sorter: (a, b) => Number(a.runned) - Number(b.runned),
   },
   {
     title: "Update Date",
     dataIndex: "updateDate",
     sorter: (a, b) => a.updateDate.localeCompare(b.updateDate),
   },
-  {
-    title: "Auto Train",
-    key: "autoTrain",
-    width: 100,
-    render: () => <Switch defaultChecked={false} />,
-  },
+
   {
     title: "Active",
     key: "active",
     width: 100,
+    sorter: (a, b) => a.key.localeCompare(b.key),
+    render: () => <Switch defaultChecked={false} />,
+  },
+  {
+    title: "Share",
+    key: "autoTrain",
+    width: 100,
+    sorter: (a, b) => a.key.localeCompare(b.key),
     render: () => <Switch defaultChecked={false} />,
   },
 ];
@@ -63,50 +64,34 @@ const columns: ColumnsType<ModelData> = [
 const data: ModelData[] = [
   {
     key: "1",
-    modelName: "John Brown",
-    modelImage: userImage,
-    parameters: (
-      <span>
-        <b>200</b> BTERC
-      </span>
-    ),
-    modelRScore: "0,98",
+    flowName: "John Brown",
+    flowImage: userImage,
+    steps: "10",
+    runned: "0,98",
     updateDate: "2 days ago",
   },
   {
     key: "2",
-    modelName: "John Brown",
-    modelImage: userImage,
-    parameters: (
-      <span>
-        <b>200</b> BTERC
-      </span>
-    ),
-    modelRScore: "0,98",
+    flowName: "John Brown",
+    flowImage: userImage,
+    steps: "10",
+    runned: "0,98",
     updateDate: "2 days ago",
   },
   {
     key: "3",
-    modelName: "John Brown",
-    modelImage: userImage,
-    parameters: (
-      <span>
-        <b>200</b> BTERC
-      </span>
-    ),
-    modelRScore: "0,98",
+    flowName: "John Brown",
+    flowImage: userImage,
+    steps: "10",
+    runned: "0,98",
     updateDate: "2 days ago",
   },
   {
     key: "4",
-    modelName: "John Brown",
-    modelImage: userImage,
-    parameters: (
-      <span>
-        <b>200</b> BTERC
-      </span>
-    ),
-    modelRScore: "0,98",
+    flowName: "John Brown",
+    flowImage: userImage,
+    steps: "10",
+    runned: "0,98",
     updateDate: "2 days ago",
   },
 ];

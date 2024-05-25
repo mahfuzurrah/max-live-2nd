@@ -36,10 +36,20 @@ export default function ModelsPage() {
           />
         ))}
       </div>
-      <h3 className="flex gap-4 py-4">
-        <ArrowProcess />
-        My flows
-      </h3>
+      <div className="flex items-center justify-between">
+        <h3 className="flex gap-4 py-4">
+          <ArrowProcess />
+          My flows
+        </h3>
+        <Select
+          defaultValue="This month"
+          style={{
+            width: 132,
+          }}
+          className="select"
+          options={[{ value: "This month", label: "This month" }]}
+        />
+      </div>
       <div className="mt-5 table_area">
         <ModelsTable />
       </div>
