@@ -5,7 +5,7 @@ import { Avatar, Button, Form, Input } from "antd";
 
 const Profile = () => {
   return (
-    <div className="flex flex-col gap-8 px-4 ">
+    <div className="flex flex-col gap-8 p-4 ">
       <div className="">
         <div className="flex items-center gap-3 mb-4">
           <UserLogo />
