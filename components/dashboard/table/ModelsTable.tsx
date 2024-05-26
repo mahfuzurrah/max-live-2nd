@@ -2,6 +2,7 @@ import userImage from "@/public/images/Avatar.svg";
 import { Image, Switch, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { StaticImageData } from "next/image";
+import Link from "next/link";
 import { ReactNode } from "react";
 
 interface ModelData {
@@ -24,10 +25,13 @@ const columns: ColumnsType<ModelData> = [
     title: "Model name",
     dataIndex: "flowName",
     render: (text, record) => (
-      <div className="flex items-center ">
+      <Link
+        href={`/dashboard/flows/${record.key}`}
+        className="flex items-center "
+      >
         <Image src={record.flowImage.src} width={50} preview={false} />
         <span style={{ marginLeft: 10 }}>{text}</span>
-      </div>
+      </Link>
     ),
   },
   {

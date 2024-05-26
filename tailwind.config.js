@@ -116,12 +116,18 @@ module.exports = {
       },
       animation: {
         float: 'float 3s ease-in-out infinite',
+        shake: 'shake 0.5s ease-in-out'
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)', },
           '50%': { transform: 'translateY(-5%)', },
         },
+        shake: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '10%, 30%': { transform: 'translateY(-10px)' },
+          '20%, 40%': { transform: 'translateY(0)' },
+        }
       },
       zIndex: {
         '-1': '-1',
