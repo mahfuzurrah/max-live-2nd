@@ -36,7 +36,7 @@ function SideBarMenuItem({ item }: { item: MenuItem }) {
           <div className="icon">{item.icon}</div>
           {item.label}
         </div>
-        <Render.When isTrue={item.route === "/dashboard/flows"}>
+        <Render.When isTrue={item.route === "/flows"}>
           <div className="icon">
             <span
               className={`px-[6px] py-[2px] text-white rounded-md badge   ${
@@ -63,7 +63,7 @@ export default function DashboardSidebar({
       id: 1,
       label: "Dashboard",
       icon: <IoGrid className="icons" />,
-      route: "/dashboard",
+      route: "/",
     },
     // {
     //   id: 2,
@@ -87,19 +87,19 @@ export default function DashboardSidebar({
       id: 7,
       label: "Flows",
       icon: <TiFlowSwitch className="icons" />,
-      route: "/dashboard/flows",
+      route: "/flows",
     },
     {
       id: 6,
       label: "Parameters",
       icon: <TbSettingsCog className="icons" />,
-      route: "/dashboard/parameters",
+      route: "/parameters",
     },
     {
       id: 5,
       label: "Profile",
       icon: <FaUser className="icons" />,
-      route: "/dashboard/profile",
+      route: "/profile",
     },
   ]);
 

@@ -13,7 +13,7 @@ import { FaPencilAlt, FaPlus } from "react-icons/fa";
 // Interface for the item in the data array
 interface Item {
   name: string;
-  id?: number;
+  id: number;
   status: string;
   icon: StaticImageData;
   describe: string;
@@ -26,6 +26,7 @@ const FlowDetails: React.FC = () => {
   const data: Item[] = [
     {
       name: "Document",
+      id: 1,
       status: "completed",
       icon: documentIcon,
       describe:
@@ -33,6 +34,7 @@ const FlowDetails: React.FC = () => {
     },
     {
       name: "Link",
+      id: 2,
       status: "completed",
       icon: LinkIcon,
       describe:
@@ -40,6 +42,7 @@ const FlowDetails: React.FC = () => {
     },
     {
       name: "If",
+      id: 3,
       status: "completed",
       icon: Cors,
       describe:
@@ -47,6 +50,7 @@ const FlowDetails: React.FC = () => {
     },
     {
       name: "Language",
+      id: 4,
       status: "completed",
       icon: commonQu,
       describe:
@@ -59,6 +63,9 @@ const FlowDetails: React.FC = () => {
   const [droppedItems, setDroppedItems] = useState<Item[]>([]);
   const [editMode, setEditMode] = useState<Item | null>(null);
   const [activeSwitch, setActiveSwitch] = useState<boolean>(false);
+
+  // Counter for generating unique IDs for dropped items
+  const [idCounter, setIdCounter] = useState<number>(5);
 
   // Event handler for drag start
   const handleDragStart = (
@@ -80,29 +87,28 @@ const FlowDetails: React.FC = () => {
     e.preventDefault();
     const draggedItem = e.dataTransfer.getData("item");
     if (draggedItem) {
-      // find if already exists change the position
-
       const item = JSON.parse(draggedItem);
-      if (
-        droppedItems.find((i) => i.name === item.name) &&
-        item.type === "graph"
-      ) {
+      const offsetX = e.clientX - e.currentTarget.getBoundingClientRect().left;
+      const offsetY = e.clientY - e.currentTarget.getBoundingClientRect().top;
+
+      if (item.type === "graph") {
+        // Update position of existing item
         const newItems = droppedItems.map((i) => {
-          if (i.name === item.name) {
+          if (i.id === item.id) {
             return {
               ...i,
-              offsetX: e.clientX - e.currentTarget.getBoundingClientRect().left,
-              offsetY: e.clientY - e.currentTarget.getBoundingClientRect().top,
+              offsetX,
+              offsetY,
             };
           }
           return i;
         });
         setDroppedItems(newItems);
       } else {
-        const offsetX =
-          e.clientX - e.currentTarget.getBoundingClientRect().left;
-        const offsetY = e.clientY - e.currentTarget.getBoundingClientRect().top;
-        setDroppedItems([...droppedItems, { ...item, offsetX, offsetY }]);
+        // Add new item
+        const newItem = { ...item, id: idCounter, offsetX, offsetY };
+        setDroppedItems([...droppedItems, newItem]);
+        setIdCounter(idCounter + 1);
       }
     }
   };
@@ -189,16 +195,7 @@ const FlowDetails: React.FC = () => {
                       <p>{item.name}</p>
                       <FaPencilAlt />
                     </div>
-                    <FaPlus
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const newItem: Item = {
-                          ...item,
-                          id: droppedItems.length,
-                        }; // Assuming `id` is needed
-                        setDroppedItems([...droppedItems, newItem]);
-                      }}
-                    />
+                    <FaPlus />
                   </div>
                 ))}
               </div>

@@ -25,10 +25,7 @@ const columns: ColumnsType<ModelData> = [
     title: "Model name",
     dataIndex: "flowName",
     render: (text, record) => (
-      <Link
-        href={`/dashboard/flows/${record.key}`}
-        className="flex items-center "
-      >
+      <Link href={`/flows/${record.key}`} className="flex items-center ">
         <Image src={record.flowImage.src} width={50} preview={false} />
         <span style={{ marginLeft: 10 }}>{text}</span>
       </Link>

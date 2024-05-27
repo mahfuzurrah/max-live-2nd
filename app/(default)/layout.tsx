@@ -1,31 +1,35 @@
 "use client";
 
-import { useEffect } from "react";
+import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+import Navbar from "@/components/dashboard/Navbar";
+import "@/styles/dashboard/index.css";
+import "@/styles/dashboard/layout.css";
+import { Layout } from "antd";
+import { useState } from "react";
+const { Header, Content } = Layout;
 
-import AOS from "aos";
-import "aos/dist/aos.css";
-import Footer from "@/components/ui/footer/footer";
-import Header from "@/components/ui/header";
-
-export default function DefaultLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  useEffect(() => {
-    AOS.init({
-      once: true,
-      disable: "phone",
-      duration: 700,
-      easing: "ease-out-cubic",
-    });
-  });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
-    <>
-      <Header />
-      <main className="grow">{children}</main>
-      <Footer />
-    </>
+    <Layout>
+      <DashboardSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <Layout className="main_body">
+        <Header className="top_navbar">
+          <Navbar toggleSidebar={toggleSidebar} />
+        </Header>
+        <Layout>
+          <Content className="body_content">{children}</Content>
+        </Layout>
+      </Layout>
+    </Layout>
   );
 }

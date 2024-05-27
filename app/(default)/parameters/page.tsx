@@ -28,7 +28,7 @@ const Parameters = () => {
           size="small"
           className="font-semibold rounded-lg"
         >
-          <Link href="/dashboard/parameters/create">Create</Link>
+          <Link href="/parameters/create">Create</Link>
         </Button>
         <div className="">
           <button className="wallet-btn">
