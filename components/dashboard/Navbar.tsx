@@ -4,11 +4,13 @@ import { Dropdown, Menu, Space } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { PiCaretUpDown } from "react-icons/pi";
 import logOut from "../../public/images/Log Out.svg";
 import Profile from "../../public/images/Profile.svg";
+import Notifications from "./Notifications";
 
 const handleMenuClick = (e: any) => {
   console.log("click");
@@ -35,6 +37,25 @@ export default function Navbar({
 }) {
   const pathname = usePathname();
   const path = pathname.split("/").pop();
+
+  const [showNotifi, setShowNotifi] = useState(false);
+  const notifiRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      notifiRef.current &&
+      !notifiRef.current.contains(event.target as Node)
+    ) {
+      setShowNotifi(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className="nav">
       <div className="toggle_btn" onClick={toggleSidebar}>
@@ -45,12 +66,16 @@ export default function Navbar({
       </div>
       <div className="right_area">
         <div className="relative">
-          <div className="border notifi border-blue-primary">
+          <div
+            ref={notifiRef}
+            onClick={() => setShowNotifi(!showNotifi)}
+            className="border notifi border-blue-primary"
+          >
             <IoMdNotificationsOutline className="icons" />
             <span className="dot"></span>
           </div>
           {/* //! Notifications comp */}
-          {/* <Notifications /> */}
+          {showNotifi && <Notifications />}
         </div>
 
         <Dropdown
