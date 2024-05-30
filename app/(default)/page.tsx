@@ -1,4 +1,3 @@
-"use client";
 import Loading from "@/public/images/hourglass.svg";
 import Image from "next/image";
 

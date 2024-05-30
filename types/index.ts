@@ -17,3 +17,14 @@ export interface CardItem {
     number: string;
     gain: string;
 }
+
+
+export interface FlowItem {
+    id: string;
+    name: string;
+    status: "COMPLETED" | "INCOMPLETED";
+    icon: StaticImageData;
+    describe: string;
+    offsetX?: number;
+    offsetY?: number;
+}
