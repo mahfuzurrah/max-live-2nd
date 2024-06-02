@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { IoGrid } from "react-icons/io5";
 import { TbSettingsCog } from "react-icons/tb";
 import { TiFlowSwitch } from "react-icons/ti";
+
 interface DashboardSidebarProps {
   isOpen: boolean;
   toggleSidebar: () => void;
@@ -58,6 +59,7 @@ export default function DashboardSidebar({
   isOpen,
   toggleSidebar,
 }: DashboardSidebarProps) {
+
   const [menuItems, setMenuItems] = useState<MenuItem[]>([
     {
       id: 1,

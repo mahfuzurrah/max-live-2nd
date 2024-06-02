@@ -1,26 +1,35 @@
-import { FlowItem } from '@/types';
+import { setEditMode } from '@/lib/features/flow/flowSlice';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { RootState } from '@/lib/store';
+import { FlowItemNodeData, IFlowItemNode } from '@/types';
 import { Button, Input, Switch } from 'antd'
 import TextArea from 'antd/es/input/TextArea';
-import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 interface UpdateFlowItemProps {
-    onSaveButtonClick: () => void,
-    item: FlowItem,
-    handleUpdateItemInfo: (item: FlowItem) => void
+    flowNodesList: IFlowItemNode[];
+    setFlowNodesList: Dispatch<SetStateAction<IFlowItemNode[]>>;
 }
 
-export default function UpdateFlowItem({ onSaveButtonClick, item, handleUpdateItemInfo }: UpdateFlowItemProps) {
+export default function UpdateFlowItem({ flowNodesList, setFlowNodesList }: UpdateFlowItemProps) {
+    const router = useRouter()
+    const dispatch = useAppDispatch()
+    const { editFlowItem } = useAppSelector((state: RootState) => state.flow)
     const [stepName, setStepName] = useState("")
     const [itemDescribe, setItemDescribe] = useState("")
     const [itemStatus, setItemStatus] = useState<"COMPLETED" | "INCOMPLETED">("INCOMPLETED")
 
     useEffect(() => {
-        const { name, status, describe } = item || {}
+        // set initial value of edit flow item
+        if (editFlowItem) {
+            const { data: { name, describe, status } } = editFlowItem
 
-        if (name && status && describe) {
-            setStepName(name)
-            setItemStatus(status)
-            setItemDescribe(describe)
+            if (name && status && describe) {
+                setStepName(name)
+                setItemStatus(status)
+                setItemDescribe(describe)
+            }
         }
     }, [])
 
@@ -32,17 +41,33 @@ export default function UpdateFlowItem({ onSaveButtonClick, item, handleUpdateIt
         }
     }
 
-    function handleUpdate() {
-        const obj: FlowItem = {
-            ...item,
-            name: stepName,
-            status: itemStatus,
-            describe: itemDescribe
+    function handleUpdateFlow() {
+        if (editFlowItem) {
+            const oldFlowNodeData: IFlowItemNode = flowNodesList[Number(editFlowItem?.id)]
+            const oldFlowData: FlowItemNodeData = oldFlowNodeData.data
+
+            setFlowNodesList((prev: IFlowItemNode[]) => {
+                const newNode: IFlowItemNode = {
+                    ...oldFlowNodeData,
+                    data: {
+                        ...oldFlowData,
+                        name: stepName,
+                        describe: itemDescribe,
+                        status: itemStatus
+                    }
+                };
+
+                const result = [...prev]
+                result[Number(editFlowItem?.id)] = newNode
+
+                return [...result]
+            })
+
+            dispatch(setEditMode(null))
+            setTimeout(() => {
+                router.push("/flows")
+            }, 500)
         }
-
-        handleUpdateItemInfo(obj)
-
-        onSaveButtonClick()
     }
 
     return (
@@ -67,7 +92,7 @@ export default function UpdateFlowItem({ onSaveButtonClick, item, handleUpdateIt
                         onChange={handleSwitch}
                     />
                 </div>
-                <Button onClick={handleUpdate} type="primary" size="middle" className="w-20 rounded-lg mt-2">
+                <Button onClick={handleUpdateFlow} type="primary" size="middle" className="w-20 rounded-lg mt-2">
                     Save
                 </Button>
             </div>

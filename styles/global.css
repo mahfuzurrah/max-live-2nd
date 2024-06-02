@@ -15,3 +15,7 @@
     direction: rtl;
   }
 }
+
+.react-flow__panel {
+  @apply hidden;
+}

@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 
 import { SessionProvider } from "next-auth/react";
 import { NextSession } from "@/provider/NextSession";
+import NextTopLoader from 'nextjs-toploader';
+import StoreProvider from "@/provider/StoreProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,9 +31,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-inter antialiased bg-white text-gray-900 tracking-tight`}
       >
+        <NextTopLoader showSpinner={false} />
         <div className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
           <NextSession>
-            {children}
+            <StoreProvider>
+              {children}
+            </StoreProvider>
           </NextSession>
         </div>
       </body>

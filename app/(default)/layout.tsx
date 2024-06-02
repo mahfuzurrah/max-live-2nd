@@ -4,6 +4,7 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import Navbar from "@/components/dashboard/Navbar";
 import "@/styles/dashboard/index.css";
 import "@/styles/dashboard/layout.css";
+import 'reactflow/dist/style.css';
 import { Layout } from "antd";
 import { useState } from "react";
 const { Header, Content } = Layout;

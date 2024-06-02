@@ -1,18 +1,20 @@
 "use client";
+
 import UpdateFlowFlowItem from "@/components/dashboard/UpdateFlowItem";
+import ReactFlowContainer from "@/components/ReactFlowContainer";
+import { useAppSelector } from "@/lib/hooks";
+import { RootState } from "@/lib/store";
 // Importing required images and components
 import Cors from "@/public/images/arrows-cross.svg";
 import commonQu from "@/public/images/comments-question.svg";
 import documentIcon from "@/public/images/file-minus.svg";
 import FilterIcon from "@/public/images/filter.svg";
 import LinkIcon from "@/public/images/link.svg";
-import { FlowItem } from "@/types";
-import { Button, Select, Switch } from "antd";
-import Image, { StaticImageData } from "next/image";
-import { useState } from "react";
-import { FaPencilAlt, FaPlus } from "react-icons/fa";
+import { FlowItem, FlowItemNodeData, IFlowEdgesData, IFlowItemNode } from "@/types";
+import { Button, Select } from "antd";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-
 
 const FlowDetails: React.FC = () => {
   // Sample data for items
@@ -47,14 +49,22 @@ const FlowDetails: React.FC = () => {
     },
   ]);
 
+  const { editFlowItem } = useAppSelector((state: RootState) => state.flow)
+
+  const [flowNodesList, setFlowNodesList] = useState<IFlowItemNode[]>([]);
+
+  const [flowEdgesList, setFlowEdgesList] = useState<IFlowEdgesData[]>([]);
+
+  useEffect(() => {
+    if (flowNodesList.length === 2) {
+      setFlowEdgesList([{ id: uuidv4(), source: flowNodesList[0].id, target: flowNodesList[1].id }])
+    }
+  }, [flowNodesList])
+
+
   // State variables
   const [shakingIndex, setShakingIndex] = useState<number | null>(null);
   const [droppedFlowItems, setDroppedFlowItems] = useState<FlowItem[]>([]);
-  const [editMode, setEditMode] = useState<FlowItem | null>(null);
-  // const [activeSwitch, setActiveSwitch] = useState<boolean>(false);
-
-  // Counter for generating unique IDs for dropped items
-  const [idCounter, setIdCounter] = useState<number>(5);
 
   // Event handler for drag start
   const handleDragStart = (
@@ -74,67 +84,45 @@ const FlowDetails: React.FC = () => {
   // Event handler for dropping an item outside the graph area
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+
     const draggedFlowItem = e.dataTransfer.getData("item");
+
     if (draggedFlowItem) {
-      const item = JSON.parse(draggedFlowItem);
+      const item: FlowItem = JSON.parse(draggedFlowItem);
       const offsetX = e.clientX - e.currentTarget.getBoundingClientRect().left;
       const offsetY = e.clientY - e.currentTarget.getBoundingClientRect().top;
 
-      if (item.type === "graph") {
-        // Update position of existing item
-        const newFlowItems = droppedFlowItems.map((i) => {
-          if (i.id === item.id) {
-            return {
-              ...i,
-              offsetX,
-              offsetY,
-            };
-          }
-          return i;
-        });
-        setDroppedFlowItems(newFlowItems);
-      } else {
-        // Add new item
-        const newFlowItem = { ...item, offsetX, offsetY };
-        setDroppedFlowItems([...droppedFlowItems, newFlowItem]);
-        // setIdCounter(idCounter + 1);
-      }
-    }
-  };
-
-  const handleAddSimilarFlowItem = (item: FlowItem) => {
-    const { offsetX, offsetY } = item || {}
-
-    if (offsetX && offsetY) {
-      const newFlowItem = { ...item, id: uuidv4(), offsetX: offsetX + 260, offsetY };
+      // Add new item
+      const newFlowItem = { ...item, offsetX, offsetY };
       setDroppedFlowItems([...droppedFlowItems, newFlowItem]);
-      // setIdCounter(idCounter + 1);
+      // setIdCounter(idCounter + 1);+
+
+      // new code
+      if (flowNodesList?.length === 0 && newFlowItem) {
+
+        const flowItemData: FlowItemNodeData = {
+          type: "source",
+          ...newFlowItem,
+          id: "0",
+          setFlowNodesList: setFlowNodesList
+        }
+
+        const newNode: IFlowItemNode = {
+          id: "0",
+          type: 'flowItem',
+          position: { x: 300, y: 10 },
+          data: flowItemData
+        };
+
+        setFlowNodesList([newNode])
+      }
+      // }
     }
   };
-
-  const handleUpdateItemInfo = (item: FlowItem) => {
-    // setData(prevData =>
-    //   prevData.map(el => el.id === item.id ? { ...el, ...item } : el)
-    // );
-
-    setDroppedFlowItems(prevData =>
-      prevData.map(el => el.id === item.id ? { ...el, ...item } : el)
-    );
-  }
 
   // Event handler for drag over (needed for dropping)
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-  };
-
-  // Event handler for clicking an item inside the graph area
-  const handleClickInside = (item: FlowItem) => {
-    setEditMode(item);
-  };
-
-  // Event handler for saving edited item
-  const onSaveButtonClick = () => {
-    setEditMode(null);
   };
 
   return (
@@ -177,40 +165,26 @@ const FlowDetails: React.FC = () => {
             </div>
           ))}
         </div>
-        {!editMode ? (
+        {!editFlowItem ? (
           <div>
             <h3 className="my-4">Graph</h3>
-            <div
-              onDrop={handleDrop}
+            <div onDrop={handleDrop}
               onDragOver={handleDragOver}
-              className="bg-white rounded-xl min-h-[40vh] p-4 relative"
-            >
-              <div className="flex gap-4">
-                {droppedFlowItems.map((item, i) => (
-                  <div
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, item, "graph")}
-                    key={i}
-                    className="absolute flex items-center gap-4"
-                    style={{
-                      left: `${item.offsetX}px`,
-                      top: `${item.offsetY}px`,
-                    }}
+              style={{ width: "100%", height: "50vh" }}
+              className='w-full bg-white rounded-xl p-4 mb-4'>
 
-                  >
-                    <div className="flex gap-3 items-center justify-between bg-[#E6F0FF] w-52 py-2 px-4 rounded-md">
-                      <Image src={item.icon} alt="" width={24} height={24} />
-                      <p>{item.name}</p>
-                      <FaPencilAlt className="cursor-pointer" onClick={() => handleClickInside(item)} />
-                    </div>
-                    <FaPlus onClick={(e) => handleAddSimilarFlowItem(item)} className="cursor-pointer" />
-                  </div>
-                ))}
-              </div>
+              <ReactFlowContainer
+                flowNodesList={flowNodesList}
+                setFlowNodesList={setFlowNodesList}
+                flowEdgesList={flowEdgesList}
+                setFlowEdgesList={setFlowEdgesList}
+              />
             </div>
           </div>
         ) : (
-          <UpdateFlowFlowItem item={editMode} handleUpdateItemInfo={handleUpdateItemInfo} onSaveButtonClick={onSaveButtonClick} />
+          <UpdateFlowFlowItem flowNodesList={flowNodesList}
+            setFlowNodesList={setFlowNodesList}
+          />
         )}
       </div>
     </div>
