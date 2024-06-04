@@ -2,7 +2,6 @@
 
 import UpdateFlowFlowItem from "@/components/dashboard/UpdateFlowItem";
 import ReactFlowContainer from "@/components/ReactFlowContainer";
-import { getFlowNodeType } from "@/components/utils/getFlowNodeType";
 import { addFlowNode } from "@/lib/features/flow/flowSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
@@ -55,15 +54,6 @@ const FlowDetails: React.FC = () => {
 
   const { editFlowItem } = useAppSelector((state: RootState) => state.flow)
 
-  const [flowNodesList, setFlowNodesList] = useState<IFlowItemNode[]>([]);
-
-  const [flowEdgesList, setFlowEdgesList] = useState<IFlowEdgeData[]>([]);
-
-  useEffect(() => {
-    if (flowNodesList.length === 2) {
-      // setFlowEdgesList([{ id: uuidv4(), source: flowNodesList[0].id, target: flowNodesList[1].id }])
-    }
-  }, [flowNodesList])
 
 
   // State variables
@@ -99,17 +89,11 @@ const FlowDetails: React.FC = () => {
       // Add new item
       const newFlowItem = { ...item, offsetX, offsetY };
       setDroppedFlowItems([...droppedFlowItems, newFlowItem]);
-      // setIdCounter(idCounter + 1);+
 
-      // new code
-      // if (flowNodesList?.length === 0 && newFlowItem) {
       const id = uuidv4()
       const flowItemData: FlowItemNodeData = {
-        handle: getFlowNodeType("right") as IHandleType,
-        type: "source",
         ...newFlowItem,
         id,
-        setFlowNodesList: setFlowNodesList
       }
 
       const newNode: IFlowItemNode = {
@@ -119,13 +103,7 @@ const FlowDetails: React.FC = () => {
         data: flowItemData
       };
 
-      setFlowNodesList(prev => [...prev, newNode])
-
-      // store data in redux store
-      // dispatch(addFlowSourceNode([newNode, []]))
       dispatch(addFlowNode(newNode))
-      // }
-      // }
     }
   };
 
@@ -182,12 +160,7 @@ const FlowDetails: React.FC = () => {
               style={{ width: "100%", height: "60vh" }}
               className='w-full bg-white rounded-xl p-4 mb-4'>
 
-              <ReactFlowContainer
-                flowNodesList={flowNodesList}
-                setFlowNodesList={setFlowNodesList}
-                flowEdgesList={flowEdgesList}
-                setFlowEdgesList={setFlowEdgesList}
-              />
+              <ReactFlowContainer/>
             </div>
           </div>
         ) : (

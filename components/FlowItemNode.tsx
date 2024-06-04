@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { FaPencilAlt, FaPlus } from "react-icons/fa";
-import { Handle, HandleType, Position } from "reactflow";
+import { Handle, Position } from "reactflow";
 import Image from "next/image"
-import { FlowItemNodeData, FlowItemNodeTuple, IFlowItemNode } from "@/types";
+import { FlowItemNodeData, IFlowItemNode } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addFlowEdge, addFlowNode, setEditMode } from "@/lib/features/flow/flowSlice";
 import { RootState } from "@/lib/store";
 import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from "next/navigation";
 
 interface IFlowItemNodeProps {
     data: FlowItemNodeData
@@ -14,12 +15,10 @@ interface IFlowItemNodeProps {
 
 export default function FlowItemNode({ data }: IFlowItemNodeProps) {
     const dispatch = useAppDispatch()
+    const router = useRouter();
     const { flowNodesList } = useAppSelector((state: RootState) => state.flow)
-    const { setFlowNodesList, name, icon, handle: { source, target } } = data || {}
-    const [showPlus, setShowPlus] = useState(true)
+    const { name, icon } = data || {}
     const [childCount, setChildCount] = useState(1)
-
-    console.log(childCount)
 
     function addTargetFlowItem() {
         if (1 <= childCount && childCount <= 4) {
@@ -68,7 +67,6 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
                 data: {
                     ...oldData,
                     id: targetId,
-                    type: "target"
                 }
             };
 
@@ -91,12 +89,7 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
                 dispatch(addFlowEdge({ id: uuidv4(), source: data.id, target: targetId, sourceHandle: "s-t", targetHandle: "t-b" }))
             }
 
-            setFlowNodesList((prev: IFlowItemNode[]) => {
-                return [...prev, newNode]
-            })
-
             setChildCount(prev => prev + 1)
-
         }
     }
 

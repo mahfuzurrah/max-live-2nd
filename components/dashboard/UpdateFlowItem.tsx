@@ -7,12 +7,7 @@ import TextArea from 'antd/es/input/TextArea';
 import { useRouter } from 'next/navigation';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-interface UpdateFlowItemProps {
-    // flowNodesList: IFlowItemNode[];
-    // setFlowNodesList: Dispatch<SetStateAction<IFlowItemNode[]>>;
-}
-
-export default function UpdateFlowItem({ }: UpdateFlowItemProps) {
+export default function UpdateFlowItem() {
     const { flowNodesList } = useAppSelector((state: RootState) => state.flow)
     const router = useRouter()
     const dispatch = useAppDispatch()
@@ -61,28 +56,11 @@ export default function UpdateFlowItem({ }: UpdateFlowItemProps) {
 
             dispatch(updateFlowNodes({ node: newNode, index: sourceNodeIndex }))
 
-            // setFlowNodesList((prev: IFlowItemNode[]) => {
-            //     const newNode: IFlowItemNode = {
-            //         ...oldFlowNodeData,
-            //         data: {
-            //             ...oldFlowData,
-            //             name: stepName,
-            //             describe: itemDescribe,
-            //             status: itemStatus
-            //         }
-            //     };
-
-            //     const result = [...prev]
-            //     result[Number(editFlowItem?.id)] = newNode
-
-            //     return [...result]
-            // })
-
             dispatch(setEditMode(null))
 
-            // setTimeout(() => {
-            //     router.push("/flows")
-            // }, 500)
+            setTimeout(() => {
+                router.push("/flows")
+            }, 500)
         }
     }
 

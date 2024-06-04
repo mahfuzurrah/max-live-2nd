@@ -51,8 +51,6 @@ export interface IHandleType {
 
 // Interface for Flow Item Node Data
 export interface FlowItemNodeData {
-    handle: IHandleType;
-    type: NodeType;
     id: string;
     name: string;
     status: Status;
@@ -60,7 +58,6 @@ export interface FlowItemNodeData {
     describe: string;
     offsetX: number;
     offsetY: number;
-    setFlowNodesList: Dispatch<SetStateAction<IFlowItemNode[]>>;
 }
 
 // Interface for Flow Item Node
@@ -84,5 +81,3 @@ export interface IFlowEdgeData {
     sourceHandle: string;
     targetHandle: string;
 }
-
-export type FlowItemNodeTuple = [IFlowItemNode, (IFlowItemNode | [])];
