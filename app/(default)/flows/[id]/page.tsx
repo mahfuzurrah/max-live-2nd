@@ -2,7 +2,9 @@
 
 import UpdateFlowFlowItem from "@/components/dashboard/UpdateFlowItem";
 import ReactFlowContainer from "@/components/ReactFlowContainer";
-import { useAppSelector } from "@/lib/hooks";
+import { getFlowNodeType } from "@/components/utils/getFlowNodeType";
+import { addFlowNode } from "@/lib/features/flow/flowSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 // Importing required images and components
 import Cors from "@/public/images/arrows-cross.svg";
@@ -10,13 +12,15 @@ import commonQu from "@/public/images/comments-question.svg";
 import documentIcon from "@/public/images/file-minus.svg";
 import FilterIcon from "@/public/images/filter.svg";
 import LinkIcon from "@/public/images/link.svg";
-import { FlowItem, FlowItemNodeData, IFlowEdgesData, IFlowItemNode } from "@/types";
+import { FlowItem, FlowItemNodeData, IFlowEdgeData, IFlowItemNode, IHandleType } from "@/types";
 import { Button, Select } from "antd";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { Position } from "reactflow";
 import { v4 as uuidv4 } from 'uuid';
 
 const FlowDetails: React.FC = () => {
+  const dispatch = useAppDispatch()
   // Sample data for items
   const [data, setData] = useState<FlowItem[]>([
     {
@@ -53,11 +57,11 @@ const FlowDetails: React.FC = () => {
 
   const [flowNodesList, setFlowNodesList] = useState<IFlowItemNode[]>([]);
 
-  const [flowEdgesList, setFlowEdgesList] = useState<IFlowEdgesData[]>([]);
+  const [flowEdgesList, setFlowEdgesList] = useState<IFlowEdgeData[]>([]);
 
   useEffect(() => {
     if (flowNodesList.length === 2) {
-      setFlowEdgesList([{ id: uuidv4(), source: flowNodesList[0].id, target: flowNodesList[1].id }])
+      // setFlowEdgesList([{ id: uuidv4(), source: flowNodesList[0].id, target: flowNodesList[1].id }])
     }
   }, [flowNodesList])
 
@@ -98,24 +102,29 @@ const FlowDetails: React.FC = () => {
       // setIdCounter(idCounter + 1);+
 
       // new code
-      if (flowNodesList?.length === 0 && newFlowItem) {
-
-        const flowItemData: FlowItemNodeData = {
-          type: "source",
-          ...newFlowItem,
-          id: "0",
-          setFlowNodesList: setFlowNodesList
-        }
-
-        const newNode: IFlowItemNode = {
-          id: "0",
-          type: 'flowItem',
-          position: { x: 300, y: 10 },
-          data: flowItemData
-        };
-
-        setFlowNodesList([newNode])
+      // if (flowNodesList?.length === 0 && newFlowItem) {
+      const id = uuidv4()
+      const flowItemData: FlowItemNodeData = {
+        handle: getFlowNodeType("right") as IHandleType,
+        type: "source",
+        ...newFlowItem,
+        id,
+        setFlowNodesList: setFlowNodesList
       }
+
+      const newNode: IFlowItemNode = {
+        id,
+        type: 'flowItem',
+        position: { x: 300, y: 10 },
+        data: flowItemData
+      };
+
+      setFlowNodesList(prev => [...prev, newNode])
+
+      // store data in redux store
+      // dispatch(addFlowSourceNode([newNode, []]))
+      dispatch(addFlowNode(newNode))
+      // }
       // }
     }
   };
@@ -170,7 +179,7 @@ const FlowDetails: React.FC = () => {
             <h3 className="my-4">Graph</h3>
             <div onDrop={handleDrop}
               onDragOver={handleDragOver}
-              style={{ width: "100%", height: "50vh" }}
+              style={{ width: "100%", height: "60vh" }}
               className='w-full bg-white rounded-xl p-4 mb-4'>
 
               <ReactFlowContainer
@@ -182,8 +191,7 @@ const FlowDetails: React.FC = () => {
             </div>
           </div>
         ) : (
-          <UpdateFlowFlowItem flowNodesList={flowNodesList}
-            setFlowNodesList={setFlowNodesList}
+          <UpdateFlowFlowItem
           />
         )}
       </div>

@@ -1,4 +1,4 @@
-import { setEditMode } from '@/lib/features/flow/flowSlice';
+import { setEditMode, updateFlowNodes } from '@/lib/features/flow/flowSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { RootState } from '@/lib/store';
 import { FlowItemNodeData, IFlowItemNode } from '@/types';
@@ -8,11 +8,12 @@ import { useRouter } from 'next/navigation';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 interface UpdateFlowItemProps {
-    flowNodesList: IFlowItemNode[];
-    setFlowNodesList: Dispatch<SetStateAction<IFlowItemNode[]>>;
+    // flowNodesList: IFlowItemNode[];
+    // setFlowNodesList: Dispatch<SetStateAction<IFlowItemNode[]>>;
 }
 
-export default function UpdateFlowItem({ flowNodesList, setFlowNodesList }: UpdateFlowItemProps) {
+export default function UpdateFlowItem({ }: UpdateFlowItemProps) {
+    const { flowNodesList } = useAppSelector((state: RootState) => state.flow)
     const router = useRouter()
     const dispatch = useAppDispatch()
     const { editFlowItem } = useAppSelector((state: RootState) => state.flow)
@@ -43,30 +44,45 @@ export default function UpdateFlowItem({ flowNodesList, setFlowNodesList }: Upda
 
     function handleUpdateFlow() {
         if (editFlowItem) {
-            const oldFlowNodeData: IFlowItemNode = flowNodesList[Number(editFlowItem?.id)]
+            const sourceNodeIndex = flowNodesList.findIndex((node: IFlowItemNode) => node.id === editFlowItem?.id);
+            const oldFlowNodeData = flowNodesList[sourceNodeIndex];
+
             const oldFlowData: FlowItemNodeData = oldFlowNodeData.data
 
-            setFlowNodesList((prev: IFlowItemNode[]) => {
-                const newNode: IFlowItemNode = {
-                    ...oldFlowNodeData,
-                    data: {
-                        ...oldFlowData,
-                        name: stepName,
-                        describe: itemDescribe,
-                        status: itemStatus
-                    }
-                };
+            const newNode: IFlowItemNode = {
+                ...oldFlowNodeData,
+                data: {
+                    ...oldFlowData,
+                    name: stepName,
+                    describe: itemDescribe,
+                    status: itemStatus
+                }
+            };
 
-                const result = [...prev]
-                result[Number(editFlowItem?.id)] = newNode
+            dispatch(updateFlowNodes({ node: newNode, index: sourceNodeIndex }))
 
-                return [...result]
-            })
+            // setFlowNodesList((prev: IFlowItemNode[]) => {
+            //     const newNode: IFlowItemNode = {
+            //         ...oldFlowNodeData,
+            //         data: {
+            //             ...oldFlowData,
+            //             name: stepName,
+            //             describe: itemDescribe,
+            //             status: itemStatus
+            //         }
+            //     };
+
+            //     const result = [...prev]
+            //     result[Number(editFlowItem?.id)] = newNode
+
+            //     return [...result]
+            // })
 
             dispatch(setEditMode(null))
-            setTimeout(() => {
-                router.push("/flows")
-            }, 500)
+
+            // setTimeout(() => {
+            //     router.push("/flows")
+            // }, 500)
         }
     }
 

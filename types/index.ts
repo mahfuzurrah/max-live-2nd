@@ -42,8 +42,16 @@ export interface FlowItem {
     offsetY?: number;
 }
 
+export type HandlePosition = "bottom" | "left" | "right" | "top"
+
+export interface IHandleType {
+    source: HandlePosition,
+    target: HandlePosition
+}
+
 // Interface for Flow Item Node Data
 export interface FlowItemNodeData {
+    handle: IHandleType;
     type: NodeType;
     id: string;
     name: string;
@@ -69,8 +77,12 @@ export interface IFlowItemNode {
 }
 
 // Interface for Flow Edges Data
-export interface IFlowEdgesData {
+export interface IFlowEdgeData {
     id: string;
     source: string;
     target: string;
+    sourceHandle: string;
+    targetHandle: string;
 }
+
+export type FlowItemNodeTuple = [IFlowItemNode, (IFlowItemNode | [])];
