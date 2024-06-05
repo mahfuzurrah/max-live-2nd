@@ -60,7 +60,7 @@ export default function UpdateFlowItem() {
 
             setTimeout(() => {
                 router.push("/flows")
-            }, 500)
+            }, 100)
         }
     }
 
