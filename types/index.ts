@@ -22,14 +22,7 @@ export interface CardItem {
 // Type for Status
 type Status = "COMPLETED" | "INCOMPLETED";
 
-// Type for Node Type
-type NodeType = "source" | "target";
 
-// Interface for Position
-interface Position {
-    x: number;
-    y: number;
-}
 
 // Interface for Flow Item
 export interface FlowItem {
@@ -49,6 +42,12 @@ export interface IHandleType {
     target: HandlePosition
 }
 
+// Interface for Position
+interface NodePosition {
+    x: number;
+    y: number;
+}
+
 // Interface for Flow Item Node Data
 export interface FlowItemNodeData {
     id: string;
@@ -58,18 +57,22 @@ export interface FlowItemNodeData {
     describe: string;
     offsetX: number;
     offsetY: number;
+    topButton: boolean;
+    rightButton: boolean;
+    leftButton: boolean;
+    bottomButton: boolean;
 }
 
 // Interface for Flow Item Node
 export interface IFlowItemNode {
     id: string;
     type: "flowItem";
-    position: Position;
+    position: NodePosition;
     data: FlowItemNodeData;
     width?: number;
     height?: number;
     selected?: boolean;
-    positionAbsolute?: Position;
+    positionAbsolute?: NodePosition;
     dragging?: boolean;
 }
 

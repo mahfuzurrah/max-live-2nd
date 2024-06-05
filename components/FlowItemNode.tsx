@@ -1,103 +1,190 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaPencilAlt, FaPlus } from "react-icons/fa";
-import { Handle, Position } from "reactflow";
-import Image from "next/image"
+import { Edge, Handle, Node, Position, getConnectedEdges } from "reactflow";
+import Image from "next/image";
 import { FlowItemNodeData, IFlowItemNode } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addFlowEdge, addFlowNode, setEditMode } from "@/lib/features/flow/flowSlice";
 import { RootState } from "@/lib/store";
 import { v4 as uuidv4 } from 'uuid';
-import { useRouter } from "next/navigation";
 
 interface IFlowItemNodeProps {
-    data: FlowItemNodeData
+    data: FlowItemNodeData;
 }
 
 export default function FlowItemNode({ data }: IFlowItemNodeProps) {
-    const dispatch = useAppDispatch()
-    const router = useRouter();
-    const { flowNodesList } = useAppSelector((state: RootState) => state.flow)
-    const { name, icon } = data || {}
-    const [childCount, setChildCount] = useState(1)
+    const dispatch = useAppDispatch();
+    const { flowNodesList, flowEdgesList } = useAppSelector((state: RootState) => state.flow);
+    const { name, icon } = data || {};
+    const [availablePositions, setAvailablePositions] = useState({
+        right: true,
+        bottom: true,
+        left: true,
+        top: true,
+    });
 
-    function addTargetFlowItem() {
-        if (1 <= childCount && childCount <= 4) {
-            const targetId = uuidv4()
-            const sourceNodeIndex = flowNodesList.findIndex((node: IFlowItemNode) => node.id === data.id);
-            const oldNodeData = flowNodesList[sourceNodeIndex];
+    useEffect(() => {
+        const node = flowNodesList.find((node: IFlowItemNode) => node.id === data.id);
+        if (!node) return;
 
-            const { position: { x, y } } = oldNodeData;
-            const oldData = oldNodeData.data;
+        const connectedEdges = getConnectedEdges([node as Node], flowEdgesList as Edge[]);
+        const positions = {
+            right: true,
+            bottom: true,
+            left: true,
+            top: true,
+        };
 
-            let position = { x, y };
-
-            if (childCount == 1) {
-                position = {
-                    x: x + 300,
-                    y
+        connectedEdges.forEach(edge => {
+            if (edge.source === node.id) {
+                switch (edge.sourceHandle) {
+                    case "s-r":
+                        positions.right = false;
+                        break;
+                    case "s-b":
+                        positions.bottom = false;
+                        break;
+                    case "s-l":
+                        positions.left = false;
+                        break;
+                    case "s-t":
+                        positions.top = false;
+                        break;
                 }
             }
-
-            if (childCount == 2) {
-                position = {
-                    x,
-                    y: y + 100
+            if (edge.target === node.id) {
+                switch (edge.targetHandle) {
+                    case "t-r":
+                        positions.right = false;
+                        break;
+                    case "t-b":
+                        positions.bottom = false;
+                        break;
+                    case "t-l":
+                        positions.left = false;
+                        break;
+                    case "t-t":
+                        positions.top = false;
+                        break;
                 }
             }
+        });
 
-            if (childCount == 3) {
-                position = {
-                    x: x - 300,
-                    y
-                }
-            }
+        setAvailablePositions(positions);
+    }, [flowEdgesList, data.id, flowNodesList]);
 
-            if (childCount == 4) {
-                position = {
-                    x,
-                    y: y - 100
-                }
-            }
+    // useEffect(() => {
+    //     const connectedEdges = getConnectedEdges([data], flowEdgesList);
+    //     const positions = {
+    //         right: true,
+    //         bottom: true,
+    //         left: true,
+    //         top: true,
+    //     };
 
-            const newNode: IFlowItemNode = {
-                ...oldNodeData,
-                id: targetId,
-                type: 'flowItem',
-                position,
-                data: {
-                    ...oldData,
-                    id: targetId,
-                }
-            };
+    //     connectedEdges.forEach(edge => {
+    //         if (edge.source === data.id) {
+    //             switch (edge.sourceHandle) {
+    //                 case "s-r":
+    //                     positions.right = false;
+    //                     break;
+    //                 case "s-b":
+    //                     positions.bottom = false;
+    //                     break;
+    //                 case "s-l":
+    //                     positions.left = false;
+    //                     break;
+    //                 case "s-t":
+    //                     positions.top = false;
+    //                     break;
+    //             }
+    //         }
+    //         if (edge.target === data.id) {
+    //             switch (edge.targetHandle) {
+    //                 case "t-r":
+    //                     positions.right = false;
+    //                     break;
+    //                 case "t-b":
+    //                     positions.bottom = false;
+    //                     break;
+    //                 case "t-l":
+    //                     positions.left = false;
+    //                     break;
+    //                 case "t-t":
+    //                     positions.top = false;
+    //                     break;
+    //             }
+    //         }
+    //     });
 
-            dispatch(addFlowNode(newNode))
+    //     setAvailablePositions(positions);
+    // }, [flowEdgesList, data]);
 
-            if (childCount === 1) {
+    function addTargetFlowItem(positionKey: "right" | "bottom" | "left" | "top") {
+        const targetId = uuidv4();
+        const sourceNodeIndex = flowNodesList.findIndex((node: IFlowItemNode) => node.id === data.id);
+        const oldNodeData = flowNodesList[sourceNodeIndex];
+        const { position: { x, y } } = oldNodeData;
 
-                dispatch(addFlowEdge({ id: uuidv4(), source: data.id, target: targetId, sourceHandle: "s-r", targetHandle: "t-l" }))
-            }
+        let position = { x, y };
 
-            if (childCount === 2) {
-                dispatch(addFlowEdge({ id: uuidv4(), source: data.id, target: targetId, sourceHandle: "s-b", targetHandle: "t-t" }))
-            }
-
-            if (childCount === 3) {
-                dispatch(addFlowEdge({ id: uuidv4(), source: data.id, target: targetId, sourceHandle: "s-l", targetHandle: "t-r" }))
-            }
-
-            if (childCount === 4) {
-                dispatch(addFlowEdge({ id: uuidv4(), source: data.id, target: targetId, sourceHandle: "s-t", targetHandle: "t-b" }))
-            }
-
-            setChildCount(prev => prev + 1)
+        switch (positionKey) {
+            case "right":
+                position = { x: x + 300, y };
+                break;
+            case "bottom":
+                position = { x, y: y + 100 };
+                break;
+            case "left":
+                position = { x: x - 300, y };
+                break;
+            case "top":
+                position = { x, y: y - 100 };
+                break;
         }
+
+        const newNode: IFlowItemNode = {
+            ...oldNodeData,
+            id: targetId,
+            type: 'flowItem',
+            position,
+            data: {
+                ...oldNodeData.data,
+                id: targetId,
+            },
+        };
+
+        dispatch(addFlowNode(newNode));
+
+        let sourceHandle = "", targetHandle = "";
+
+        switch (positionKey) {
+            case "right":
+                sourceHandle = "s-r";
+                targetHandle = "t-l";
+                break;
+            case "bottom":
+                sourceHandle = "s-b";
+                targetHandle = "t-t";
+                break;
+            case "left":
+                sourceHandle = "s-l";
+                targetHandle = "t-r";
+                break;
+            case "top":
+                sourceHandle = "s-t";
+                targetHandle = "t-b";
+                break;
+        }
+
+        dispatch(addFlowEdge({ id: uuidv4(), source: data.id, target: targetId, sourceHandle, targetHandle }));
     }
 
     function handleUpdateFlowItem(id: string) {
         const sourceNodeIndex = flowNodesList.findIndex((node: IFlowItemNode) => node.id === data.id);
         const flowNode = flowNodesList[sourceNodeIndex];
 
-        dispatch(setEditMode(flowNode))
+        dispatch(setEditMode(flowNode));
     }
 
     return (
@@ -112,7 +199,6 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
             <Handle className="opacity-0" id="t-l" type="target" position={Position.Left} />
             <Handle className="opacity-0" id="t-r" type="target" position={Position.Right} />
 
-
             <div className="relative flex items-center gap-4">
                 <div className="flex gap-3 items-center justify-between bg-[#E6F0FF] w-52 py-2 px-4 rounded-md m-4">
                     <Image src={icon} alt="" width={24} height={24} />
@@ -120,11 +206,11 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
                     <FaPencilAlt onClick={() => handleUpdateFlowItem(data.id)} className="cursor-pointer" />
                 </div>
 
-                {childCount === 1 && <FaPlus onClick={addTargetFlowItem} className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer" />}
-                {childCount === 2 && <FaPlus onClick={addTargetFlowItem} className="absolute bottom-0 left-1/2 -translate-x-1/2 cursor-pointer" />}
-                {childCount === 3 && <FaPlus onClick={addTargetFlowItem} className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer" />}
-                {childCount === 4 && <FaPlus onClick={addTargetFlowItem} className="absolute top-0 left-1/2 -translate-x-1/2 cursor-pointer" />}
+                {availablePositions.right && <FaPlus onClick={() => addTargetFlowItem("right")} className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer opacity-0 hover:opacity-100" />}
+                {availablePositions.bottom && <FaPlus onClick={() => addTargetFlowItem("bottom")} className="absolute bottom-0 left-1/2 -translate-x-1/2 cursor-pointer opacity-0 hover:opacity-100" />}
+                {availablePositions.left && <FaPlus onClick={() => addTargetFlowItem("left")} className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer opacity-0 hover:opacity-100" />}
+                {availablePositions.top && <FaPlus onClick={() => addTargetFlowItem("top")} className="absolute top-0 left-1/2 -translate-x-1/2 cursor-pointer opacity-0 hover:opacity-100" />}
             </div>
         </>
-    )
+    );
 }

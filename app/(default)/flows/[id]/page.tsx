@@ -94,12 +94,16 @@ const FlowDetails: React.FC = () => {
       const flowItemData: FlowItemNodeData = {
         ...newFlowItem,
         id,
+        rightButton: true,
+        bottomButton: false,
+        leftButton: false,
+        topButton: false
       }
 
       const newNode: IFlowItemNode = {
         id,
         type: 'flowItem',
-        position: { x: 300, y: 10 },
+        position: { x: offsetX, y: offsetY },
         data: flowItemData
       };
 
@@ -160,7 +164,7 @@ const FlowDetails: React.FC = () => {
               style={{ width: "100%", height: "60vh" }}
               className='w-full bg-white rounded-xl p-4 mb-4'>
 
-              <ReactFlowContainer/>
+              <ReactFlowContainer />
             </div>
           </div>
         ) : (
