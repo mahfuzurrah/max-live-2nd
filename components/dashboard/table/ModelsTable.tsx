@@ -1,5 +1,5 @@
 import userImage from "@/public/images/Avatar.svg";
-import { Image, Switch, Table } from "antd";
+import { Button, Image, Switch, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { StaticImageData } from "next/image";
 import Link from "next/link";
@@ -22,7 +22,7 @@ const columns: ColumnsType<ModelData> = [
     sorter: (a, b) => a.key.localeCompare(b.key),
   },
   {
-    title: "Model name",
+    title: "Flow name",
     dataIndex: "flowName",
     render: (text, record) => (
       <Link href={`/flows/${record.key}`} className="flex items-center ">
@@ -36,63 +36,79 @@ const columns: ColumnsType<ModelData> = [
     dataIndex: "steps",
   },
   {
-    title: "Model R score",
+    title: "Runned",
     dataIndex: "runned",
     sorter: (a, b) => Number(a.runned) - Number(b.runned),
   },
   {
-    title: "Update Date",
+    title: "Last use",
     dataIndex: "updateDate",
     sorter: (a, b) => a.updateDate.localeCompare(b.updateDate),
   },
 
   {
-    title: "Active",
+    title: "Edit",
     key: "active",
     width: 100,
     sorter: (a, b) => a.key.localeCompare(b.key),
-    render: () => <Switch defaultChecked={false} />,
+    render: () => <Button className="rounded-2xl" type="primary">Edit</Button>,
   },
   {
-    title: "Share",
+    title: "Run",
     key: "autoTrain",
     width: 100,
     sorter: (a, b) => a.key.localeCompare(b.key),
-    render: () => <Switch defaultChecked={false} />,
+    render: () => <Button className="rounded-2xl" type="primary">Run</Button>,
   },
 ];
 
 const data: ModelData[] = [
   {
     key: "1",
-    flowName: "John Brown",
+    flowName: "Tax Analysis",
     flowImage: userImage,
-    steps: "10",
-    runned: "0,98",
+    steps: "20",
+    runned: "50",
     updateDate: "2 days ago",
   },
   {
     key: "2",
-    flowName: "John Brown",
+    flowName: "Contract Analysis",
     flowImage: userImage,
-    steps: "10",
-    runned: "0,98",
+    steps: "2",
+    runned: "75",
     updateDate: "2 days ago",
   },
   {
     key: "3",
-    flowName: "John Brown",
+    flowName: "Matter Summary",
     flowImage: userImage,
-    steps: "10",
-    runned: "0,98",
+    steps: "30",
+    runned: "22",
     updateDate: "2 days ago",
   },
   {
     key: "4",
-    flowName: "John Brown",
+    flowName: "Legal Analysis",
     flowImage: userImage,
-    steps: "10",
-    runned: "0,98",
+    steps: "7",
+    runned: "4",
+    updateDate: "2 days ago",
+  },
+  {
+    key: "5",
+    flowName: "Email Answer",
+    flowImage: userImage,
+    steps: "3",
+    runned: "4",
+    updateDate: "2 days ago",
+  },
+  {
+    key: "6",
+    flowName: "Tax report",
+    flowImage: userImage,
+    steps: "17",
+    runned: "4",
     updateDate: "2 days ago",
   },
 ];
