@@ -13,7 +13,7 @@ export default function ModelsPage() {
       <div className="title-area">
         <div className="flex gap-3">
           <MegGlass />
-          <h3>Overview</h3>
+          <h3 className="text-white">Overview</h3>
         </div>
         <Select
           defaultValue="This month"
@@ -25,7 +25,7 @@ export default function ModelsPage() {
         />
       </div>
       {/* card */}
-      <div className="overview-cards max_live_card ">
+      <div className="overview-cards max_live_card bg-white">
         {data.map((item, index) => (
           <OverviewCard
             key={index}
@@ -39,7 +39,7 @@ export default function ModelsPage() {
       <div className="flex items-center justify-between">
         <h3 className="flex gap-4 py-4">
           <ArrowProcess />
-          My flows
+          <span className="text-white">My flows</span>
         </h3>
         <Select
           defaultValue="This month"

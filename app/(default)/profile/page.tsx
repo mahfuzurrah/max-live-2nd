@@ -11,7 +11,7 @@ const Profile = () => {
           <UserLogo />
           <h3 className="">Information</h3>
         </div>
-        <div className=" border rounded-xl border-[#A698A433]/20  p-4">
+        <div className=" border rounded-xl border-[#A698A433]/20 p-4 bg-white">
           <div className="">
             <Avatar size={64} icon={<UserOutlined />} />
             <Button
@@ -48,7 +48,7 @@ const Profile = () => {
           <LockIcon />
           <h3>Change Password</h3>
         </div>
-        <div className=" border rounded-xl border-[#A698A433]/20 p-4">
+        <div className="bg-white border rounded-xl border-[#A698A433]/20 p-4">
           <Form layout="vertical" className="">
             <div className="justify-between w-full mt-4 md:flex">
               <Form.Item

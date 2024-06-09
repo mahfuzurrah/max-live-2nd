@@ -11,50 +11,53 @@ import commonQu from "@/public/images/comments-question.svg";
 import documentIcon from "@/public/images/file-minus.svg";
 import FilterIcon from "@/public/images/filter.svg";
 import LinkIcon from "@/public/images/link.svg";
+import AIIcon from "@/public/images/sparkles.svg";
+import shareIcon from "@/public/images/split.svg";
 import { FlowItem, FlowItemNodeData, IFlowEdgeData, IFlowItemNode, IHandleType } from "@/types";
 import { Button, Select } from "antd";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Position } from "reactflow";
 import { v4 as uuidv4 } from 'uuid';
+import gradientBg from "@/public/images/gradient-background.png";
+import FlowItemSidePane from "@/components/dashboard/flow/FlowItemsSidePane";
+import FlowItemSideActionModal from "@/components/dashboard/flow/FlowItemSideActionModal";
 
 const FlowDetails: React.FC = () => {
   const dispatch = useAppDispatch()
   // Sample data for items
   const [data, setData] = useState<FlowItem[]>([
     {
-      name: "Document",
+      name: "Ask AI",
       id: uuidv4(),
       status: "COMPLETED",
+      icon: AIIcon,
+      describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
+    },
+    {
+      name: "Document",
+      id: uuidv4(),
+      status: "INCOMPLETED",
       icon: documentIcon,
       describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
     },
     {
       name: "Link",
       id: uuidv4(),
-      status: "INCOMPLETED",
+      status: "COMPLETED",
       icon: LinkIcon,
       describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
     },
     {
-      name: "If",
+      name: "For each",
       id: uuidv4(),
       status: "COMPLETED",
-      icon: Cors,
-      describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
-    },
-    {
-      name: "Language",
-      id: uuidv4(),
-      status: "COMPLETED",
-      icon: commonQu,
+      icon: shareIcon,
       describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
     },
   ]);
 
-  const { editFlowItem } = useAppSelector((state: RootState) => state.flow)
-
-
+  const { editFlowItem, flowItemSidePane } = useAppSelector((state: RootState) => state.flow)
 
   // State variables
   const [shakingIndex, setShakingIndex] = useState<number | null>(null);
@@ -133,44 +136,42 @@ const FlowDetails: React.FC = () => {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col gap-4 p-4 mt-5 bg-white sm:flex-row rounded-xl">
-          {data.map((item, index) => (
-            <div
-              key={index}
-              draggable={true}
-              onDragStart={(e) => handleDragStart(e, item)}
-              onClick={() => {
-                setShakingIndex(index);
-                setTimeout(() => setShakingIndex(null), 500);
-              }}
-              className={`bg-[#E6F0FF] rounded-xl cursor-pointer ${shakingIndex === index ? "animate-shake" : ""
-                }`}
-            >
-              <div className="flex gap-2 px-2 py-3">
-                <Image src={item.icon} alt="" width={24} height={24} />
-                <div className="px-2">
-                  <h3>{item.name}</h3>
-                  <p>{item.describe}</p>
+
+        <div className="flex gap-6 w-full bg-white rounded-xl p-4 mb-4 mt-5">
+          <div className="w-full">
+            <>
+              <h3 className="my-4">Graph</h3>
+              <div onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                style={{ width: "100%", height: "60vh" }}
+                className='w-full'>
+
+                <ReactFlowContainer />
+              </div>
+            </>
+            {/* {editFlowItem ?
+              <UpdateFlowFlowItem
+              /> :
+              <div>
+                <h3 className="my-4">Graph</h3>
+                <div onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  style={{ width: "100%", height: "60vh" }}
+                  className='w-full'>
+
+                  <ReactFlowContainer />
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        {!editFlowItem ? (
-          <div>
-            <h3 className="my-4">Graph</h3>
-            <div onDrop={handleDrop}
-              onDragOver={handleDragOver}
-              style={{ width: "100%", height: "60vh" }}
-              className='w-full bg-white rounded-xl p-4 mb-4'>
-
-              <ReactFlowContainer />
-            </div>
+            } */}
           </div>
-        ) : (
-          <UpdateFlowFlowItem
-          />
-        )}
+          <div>
+            {
+              flowItemSidePane ? <FlowItemSideActionModal /> :
+                <FlowItemSidePane setShakingIndex={setShakingIndex} shakingIndex={shakingIndex} />
+            }
+          </div>
+
+        </div>
       </div>
     </div>
   );

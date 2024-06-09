@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {  IFlowEdgeData, IFlowItemNode } from '@/types'
+import { IFlowEdgeData, IFlowItemNode } from '@/types'
 
 interface IMutateFlowNode {
     node: IFlowItemNode,
@@ -10,12 +10,14 @@ interface FlowState {
     flowNodesList: IFlowItemNode[];
     flowEdgesList: IFlowEdgeData[];
     editFlowItem: IFlowItemNode | null;
+    flowItemSidePane: "Ask AI" | "Document" | "Link" | "For each" | null;
 }
 
 const initialState: FlowState = {
     flowNodesList: [],
     flowEdgesList: [],
-    editFlowItem: null
+    editFlowItem: null,
+    flowItemSidePane: null
 }
 
 export const flowSlice = createSlice({
@@ -31,6 +33,9 @@ export const flowSlice = createSlice({
         setEditMode: (state, action: PayloadAction<IFlowItemNode | null>) => {
             state.editFlowItem = action.payload
         },
+        setFlowSidePane: (state, action: PayloadAction<"Ask AI" | "Document" | "Link" | "For each" | null>) => {
+            state.flowItemSidePane = action.payload
+        },
         onFlowNodesChange: (state, action: PayloadAction<IFlowItemNode[]>) => {
             state.flowNodesList = action.payload
         },
@@ -44,6 +49,6 @@ export const flowSlice = createSlice({
     },
 })
 
-export const { setEditMode, addFlowNode, addFlowEdge, updateFlowNodes, onFlowNodesChange } = flowSlice.actions
+export const { setEditMode, addFlowNode, addFlowEdge, updateFlowNodes, onFlowNodesChange, setFlowSidePane } = flowSlice.actions
 
 export default flowSlice.reducer

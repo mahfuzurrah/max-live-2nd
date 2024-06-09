@@ -5,7 +5,7 @@ import { Edge, Handle, MarkerType, Node, Position, getConnectedEdges } from "rea
 import Image from "next/image";
 import { FlowItemNodeData, IFlowItemNode } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { addFlowEdge, addFlowNode, setEditMode } from "@/lib/features/flow/flowSlice";
+import { addFlowEdge, addFlowNode, setEditMode, setFlowSidePane } from "@/lib/features/flow/flowSlice";
 import { RootState } from "@/lib/store";
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from "antd";
@@ -189,11 +189,13 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
         }));
     }
 
-    function handleUpdateFlowItem(id: string) {
-        const sourceNodeIndex = flowNodesList.findIndex((node: IFlowItemNode) => node.id === data.id);
-        const flowNode = flowNodesList[sourceNodeIndex];
+    function handleUpdateFlowItem(name: string) {
+        // const sourceNodeIndex = flowNodesList.findIndex((node: IFlowItemNode) => node.id === data.id);
+        // const flowNode = flowNodesList[sourceNodeIndex];
 
-        dispatch(setEditMode(flowNode));
+        dispatch(setFlowSidePane(name as "Ask AI" | "Document" | "Link" | "For each"))
+
+        // dispatch(setEditMode(flowNode));
     }
 
     return (
@@ -208,18 +210,16 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
             <Handle className="opacity-0" id="t-l" type="target" position={Position.Left} />
             <Handle className="opacity-0" id="t-r" type="target" position={Position.Right} />
 
-            <div className="relative flex items-center gap-4 border rounded-2xl bg-white">
-                {/* bg-[#E6F0FF] */}
+            <div className="relative flex items-center gap-4 border-2 border-stone-700 rounded-2xl bg-white">
                 <div className="flex flex-col gap-1 items-center justify-between p-5 rounded-md m-2">
                     <Image src={icon} alt="" width={24} height={24} />
                     <p className="line-clamp-1">{name}</p>
                     <div className="flex justify-between gap-4 mt-1">
                         <Button type="primary" size="small" className="rounded-full">
-                            <FaPencilAlt onClick={() => handleUpdateFlowItem(data.id)} className="cursor-pointer" />
+                            <FaPencilAlt onClick={() => handleUpdateFlowItem(data.name)} className="cursor-pointer" />
                         </Button>
                         <Button type="primary" size="small" className="rounded-full">
                             <MdDelete />
-
                         </Button>
                     </div>
                 </div>

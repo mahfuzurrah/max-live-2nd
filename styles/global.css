@@ -19,3 +19,7 @@
 .react-flow__panel {
   @apply hidden;
 }
+
+.active .nav-link {
+  background: url("../public/images/nav-gradient-bg.png") lightgray 50% / cover no-repeat !important;
+}

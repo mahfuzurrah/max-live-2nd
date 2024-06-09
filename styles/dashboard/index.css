@@ -39,7 +39,7 @@
 }
 
 body {
-  background: var(--body-color);
+  /* background: var(--body-color); */
   font-size: var(--normal-font-size);
   color: var(--desc-color);
   font-family: var(--body-font);
@@ -354,7 +354,7 @@ section {
 }
 
 .ant-layout-content {
-  background-color: var(--body-color) !important;
+  /* background-color: var(--body-color) !important; */
 }
 
 .wallet-btn {

@@ -88,7 +88,8 @@
   height: 75px;
   position: sticky;
   top: 0;
-  background: var(--body-color);
+  /* background: var(--body-color); */
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -235,7 +236,7 @@
   .main_body .top_navbar {
     justify-content: space-between !important;
     z-index: 999999;
-    background: var(--white-color);
+    /* background: var(--white-color); */
   }
   .header_dropdown {
     background: transparent;

@@ -62,7 +62,7 @@ export default function Navbar({
         <FaBars className="icons" />
       </div>
       <div className="page_title mb_hide">
-        <h1 className="capitalize">{path}</h1>
+        <h1 className="capitalize text-white">{path === "" ? "Dashboard" : path}</h1>
       </div>
       <div className="right_area">
         <div className="relative">

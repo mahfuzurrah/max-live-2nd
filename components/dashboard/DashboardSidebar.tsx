@@ -67,24 +67,6 @@ export default function DashboardSidebar({
       icon: <IoGrid className="icons" />,
       route: "/",
     },
-    // {
-    //   id: 2,
-    //   label: "Datasets",
-    //   icon: <FaClipboardList className="icons" />,
-    //   route: "/dashboard/datasets",
-    // },
-    // {
-    //   id: 3,
-    //   label: "Models",
-    //   icon: <FaUserCog className="icons" />,
-    //   route: "/dashboard/models",
-    // },
-    // {
-    //   id: 4,
-    //   label: "Wallet",
-    //   icon: <FaUser className="icons" />,
-    //   route: "/dashboard/wallet",
-    // },
     {
       id: 7,
       label: "Flows",
