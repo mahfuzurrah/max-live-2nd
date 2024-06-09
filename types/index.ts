@@ -1,5 +1,6 @@
 import { StaticImageData } from "next/image";
 import { Dispatch, SetStateAction } from "react";
+import { MarkerType } from "reactflow";
 
 export interface TopModel {
     count: number;
@@ -83,4 +84,10 @@ export interface IFlowEdgeData {
     target: string;
     sourceHandle: string;
     targetHandle: string;
+    markerEnd: {
+        type: MarkerType.ArrowClosed;
+        width: number;
+        height: number;
+        color: string;
+    },
 }

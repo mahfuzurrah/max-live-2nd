@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { FaPencilAlt, FaPlus } from "react-icons/fa";
-import { Edge, Handle, Node, Position, getConnectedEdges } from "reactflow";
+import { MdDelete } from "react-icons/md";
+import { Edge, Handle, MarkerType, Node, Position, getConnectedEdges } from "reactflow";
 import Image from "next/image";
 import { FlowItemNodeData, IFlowItemNode } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addFlowEdge, addFlowNode, setEditMode } from "@/lib/features/flow/flowSlice";
 import { RootState } from "@/lib/store";
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from "antd";
 
 interface IFlowItemNodeProps {
     data: FlowItemNodeData;
@@ -133,13 +135,13 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
                 position = { x: x + 300, y };
                 break;
             case "bottom":
-                position = { x, y: y + 100 };
+                position = { x, y: y + 300 };
                 break;
             case "left":
                 position = { x: x - 300, y };
                 break;
             case "top":
-                position = { x, y: y - 100 };
+                position = { x, y: y - 300 };
                 break;
         }
 
@@ -177,7 +179,14 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
                 break;
         }
 
-        dispatch(addFlowEdge({ id: uuidv4(), source: data.id, target: targetId, sourceHandle, targetHandle }));
+        dispatch(addFlowEdge({
+            id: uuidv4(), source: data.id, target: targetId, sourceHandle, targetHandle, markerEnd: {
+                type: MarkerType.ArrowClosed,
+                width: 20,
+                height: 20,
+                color: '#333',
+            },
+        }));
     }
 
     function handleUpdateFlowItem(id: string) {
@@ -199,11 +208,20 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
             <Handle className="opacity-0" id="t-l" type="target" position={Position.Left} />
             <Handle className="opacity-0" id="t-r" type="target" position={Position.Right} />
 
-            <div className="relative flex items-center gap-4">
-                <div className="flex gap-3 items-center justify-between bg-[#E6F0FF] w-52 py-2 px-4 rounded-md m-4">
+            <div className="relative flex items-center gap-4 border rounded-2xl bg-white">
+                {/* bg-[#E6F0FF] */}
+                <div className="flex flex-col gap-1 items-center justify-between p-5 rounded-md m-2">
                     <Image src={icon} alt="" width={24} height={24} />
-                    <p>{name}</p>
-                    <FaPencilAlt onClick={() => handleUpdateFlowItem(data.id)} className="cursor-pointer" />
+                    <p className="line-clamp-1">{name}</p>
+                    <div className="flex justify-between gap-4 mt-1">
+                        <Button type="primary" size="small" className="rounded-full">
+                            <FaPencilAlt onClick={() => handleUpdateFlowItem(data.id)} className="cursor-pointer" />
+                        </Button>
+                        <Button type="primary" size="small" className="rounded-full">
+                            <MdDelete />
+
+                        </Button>
+                    </div>
                 </div>
 
                 {availablePositions.right && <FaPlus onClick={() => addTargetFlowItem("right")} className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer opacity-0 hover:opacity-100" />}
