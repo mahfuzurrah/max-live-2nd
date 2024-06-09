@@ -5,6 +5,8 @@ import { Button } from "antd";
 import Image from "next/image";
 import documentIcon from "@/public/images/file-minus.svg";
 import { setFlowSidePane } from "@/lib/features/flow/flowSlice";
+import { FaPencilAlt, FaPlus } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 export default function DocumentSidePane() {
   const dispatch = useAppDispatch()
@@ -27,9 +29,24 @@ export default function DocumentSidePane() {
       >
         <h2 className='text-center text-white mt-3 text-base'>Document Step</h2>
 
-        <div className='p-5 bg-white text-center rounded-2xl mt-5'>
-          <Image src={documentIcon} alt="" width={24} height={24} className='mx-auto' />
-          <h3 className='mt-5 text-base'>Upload Document</h3>
+        <div className='group p-5 bg-white text-center rounded-2xl mt-5 h-32'>
+          <div className="group-hover:hidden">
+            <Image src={documentIcon} alt="" width={24} height={24} className='mx-auto' />
+            <h3 className='mt-5 text-base'>Upload Document</h3>
+          </div>
+          <div className="hidden justify-between px-5 group-hover:flex">
+            <div className="flex flex-col gap-2 justify-center items-center rounded-lg cursor-pointer hover:bg-stone-200 p-4">
+              <FaPlus className="text-xl" />
+              <p>Add</p>
+            </div>
+
+            <div className="h-20 w-[1px] bg-black"></div>
+
+            <div className="flex flex-col gap-2 justify-center items-center rounded-lg cursor-pointer hover:bg-stone-200 p-4">
+              <MdDelete className="text-xl" />
+              <p>Delete</p>
+            </div>
+          </div>
         </div>
 
         <div className='flex justify-between mt-5'>
