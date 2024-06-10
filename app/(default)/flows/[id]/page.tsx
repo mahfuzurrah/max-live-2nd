@@ -25,58 +25,13 @@ import FlowItemSideActionModal from "@/components/dashboard/flow/FlowItemSideAct
 
 const FlowDetails: React.FC = () => {
   const dispatch = useAppDispatch()
-  // Sample data for items
-  const [data, setData] = useState<FlowItem[]>([
-    {
-      name: "Ask AI",
-      id: uuidv4(),
-      status: "COMPLETED",
-      icon: AIIcon,
-      describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
-    },
-    {
-      name: "Document",
-      id: uuidv4(),
-      status: "INCOMPLETED",
-      icon: documentIcon,
-      describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
-    },
-    {
-      name: "Link",
-      id: uuidv4(),
-      status: "COMPLETED",
-      icon: LinkIcon,
-      describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
-    },
-    {
-      name: "For each",
-      id: uuidv4(),
-      status: "COMPLETED",
-      icon: shareIcon,
-      describe: "Your input is a document, you can ask whatever you want to the model regarding this text, analyse it, generate a conclusion...",
-    },
-  ]);
 
-  const { editFlowItem, flowItemSidePane } = useAppSelector((state: RootState) => state.flow)
+  const { flowItemSidePane } = useAppSelector((state: RootState) => state.flow)
 
   // State variables
   const [shakingIndex, setShakingIndex] = useState<number | null>(null);
   const [droppedFlowItems, setDroppedFlowItems] = useState<FlowItem[]>([]);
 
-  // Event handler for drag start
-  const handleDragStart = (
-    e: React.DragEvent<HTMLDivElement>,
-    item: FlowItem,
-    type?: string
-  ) => {
-    e.dataTransfer.setData(
-      "item",
-      JSON.stringify({
-        ...item,
-        type,
-      })
-    );
-  };
 
   // Event handler for dropping an item outside the graph area
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -149,20 +104,6 @@ const FlowDetails: React.FC = () => {
                 <ReactFlowContainer />
               </div>
             </>
-            {/* {editFlowItem ?
-              <UpdateFlowFlowItem
-              /> :
-              <div>
-                <h3 className="my-4">Graph</h3>
-                <div onDrop={handleDrop}
-                  onDragOver={handleDragOver}
-                  style={{ width: "100%", height: "60vh" }}
-                  className='w-full'>
-
-                  <ReactFlowContainer />
-                </div>
-              </div>
-            } */}
           </div>
           <div>
             {
@@ -170,7 +111,6 @@ const FlowDetails: React.FC = () => {
                 <FlowItemSidePane setShakingIndex={setShakingIndex} shakingIndex={shakingIndex} />
             }
           </div>
-
         </div>
       </div>
     </div>

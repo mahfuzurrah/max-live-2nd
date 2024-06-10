@@ -19,21 +19,24 @@ const columns: ColumnsType<ModelData> = [
     title: "#",
     dataIndex: "key",
     rowSpan: 1,
+    width: 10,
     sorter: (a, b) => a.key.localeCompare(b.key),
   },
   {
     title: "Flow name",
     dataIndex: "flowName",
+    width: 300,
     render: (text, record) => (
       <Link href={`/flows/${record.key}`} className="flex items-center ">
         <Image src={record.flowImage.src} width={50} preview={false} />
-        <span style={{ marginLeft: 10 }}>{text}</span>
+        <span style={{ marginLeft: 10 }} className="text-[#353c45] font-bold">{text}</span>
       </Link>
     ),
   },
   {
     title: "Steps",
     dataIndex: "steps",
+    width: 300,
   },
   {
     title: "Runned",
@@ -50,14 +53,12 @@ const columns: ColumnsType<ModelData> = [
     title: "Edit",
     key: "active",
     width: 100,
-    sorter: (a, b) => a.key.localeCompare(b.key),
     render: () => <Button className="rounded-2xl" type="primary">Edit</Button>,
   },
   {
     title: "Run",
     key: "autoTrain",
     width: 100,
-    sorter: (a, b) => a.key.localeCompare(b.key),
     render: () => <Button className="rounded-2xl" type="primary">Run</Button>,
   },
 ];
@@ -100,7 +101,7 @@ const data: ModelData[] = [
     flowName: "Email Answer",
     flowImage: userImage,
     steps: "3",
-    runned: "4",
+    runned: "39",
     updateDate: "2 days ago",
   },
   {
@@ -108,7 +109,7 @@ const data: ModelData[] = [
     flowName: "Tax report",
     flowImage: userImage,
     steps: "17",
-    runned: "4",
+    runned: "71",
     updateDate: "2 days ago",
   },
 ];

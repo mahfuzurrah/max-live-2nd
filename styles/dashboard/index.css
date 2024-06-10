@@ -412,7 +412,7 @@ section {
 
 .table_area {
   padding: 20px;
-  background: var(--white-color);
+  /* background: var(--white-color); */
   border-radius: 12px;
 }
 

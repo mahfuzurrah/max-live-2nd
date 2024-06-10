@@ -40,7 +40,7 @@ export default function AskAISidePane() {
 
           <div className="mb-4">
             <p className="text-[#2c2e30] text-left font-bold mb-2">Instructions:</p>
-            <TextArea placeholder="Input your text..." className="rounded-xl" rows={4} />
+            <TextArea placeholder="Input your text..." className="rounded-xl" rows={10} />
           </div>
 
           <div className="flex gap-6 items-center mb-4">
@@ -53,7 +53,7 @@ export default function AskAISidePane() {
                 { value: '', label: 'GPT-4 OpenAI' },
                 { value: '', label: 'Text-To-Text Transfer Transformer' },
                 { value: '', label: 'Facebook AI' },
-                { value: 'azure OpenAI GPT 4 turbo', label: 'azure OpenAI GPT 4 turbo' },
+                { value: 'Azure OpenAI GPT 4 turbo', label: 'Azure OpenAI GPT 4 turbo' },
               ]}
             />
           </div>

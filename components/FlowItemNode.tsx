@@ -130,18 +130,20 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
 
         let position = { x, y };
 
+        const unit = 200;
+
         switch (positionKey) {
             case "right":
-                position = { x: x + 300, y };
+                position = { x: x + unit, y };
                 break;
             case "bottom":
-                position = { x, y: y + 300 };
+                position = { x, y: y + unit };
                 break;
             case "left":
-                position = { x: x - 300, y };
+                position = { x: x - unit, y };
                 break;
             case "top":
-                position = { x, y: y - 300 };
+                position = { x, y: y - unit };
                 break;
         }
 
@@ -212,8 +214,11 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
 
             <div className="relative flex items-center gap-4 border-2 border-stone-700 rounded-2xl bg-white">
                 <div className="flex flex-col gap-1 items-center justify-between p-5 rounded-md m-2">
-                    <Image src={icon} alt="" width={24} height={24} />
-                    <p className="line-clamp-1">{name}</p>
+                    <div className="h-6">
+                        <Image src={icon} alt="" width={24} height={24} />
+                    </div>
+
+                    <p className="line-clamp-1 mt-1">{name}</p>
                     <div className="flex justify-between gap-4 mt-1">
                         <Button type="primary" size="small" className="rounded-full">
                             <FaPencilAlt onClick={() => handleUpdateFlowItem(data.name)} className="cursor-pointer" />

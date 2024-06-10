@@ -107,26 +107,13 @@ export const BrainIcon = ({ className }: IconProps) => {
 
 export const LockIcon = ({ className }: IconProps) => {
   return (
-    <svg
-      width="24"
-      height="43"
-      viewBox="0 0 24 43"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g clip-path="url(#clip0_6005_3454)">
-        <path
-          opacity="0.4"
-          d="M12 10C9.2375 10 7 12.2375 7 15V18H3V15C3 10.0312 7.03125 6 12 6C16.9688 6 21 10.0312 21 15V18H17V15C17 12.2375 14.7625 10 12 10Z"
-          fill="#0065FF"
-        />
-        <path
-          d="M-2 22C-2 19.7938 -0.20625 18 2 18H22C24.2062 18 26 19.7938 26 22V34C26 36.2062 24.2062 38 22 38H2C-0.20625 38 -2 36.2062 -2 34V22Z"
-          fill="#0065FF"
-        />
+    <svg width="24" height="43" viewBox="0 0 24 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_8087_8969)">
+        <path d="M12 10C9.2375 10 7 12.2375 7 15V18H3V15C3 10.0312 7.03125 6 12 6C16.9688 6 21 10.0312 21 15V18H17V15C17 12.2375 14.7625 10 12 10Z" fill="#FFFAFA" />
+        <path d="M-2 22C-2 19.7938 -0.20625 18 2 18H22C24.2062 18 26 19.7938 26 22V34C26 36.2062 24.2062 38 22 38H2C-0.20625 38 -2 36.2062 -2 34V22Z" fill="#0065FF" />
       </g>
       <defs>
-        <clipPath id="clip0_6005_3454">
+        <clipPath id="clip0_8087_8969">
           <rect width="24" height="43" fill="white" />
         </clipPath>
       </defs>

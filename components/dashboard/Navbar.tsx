@@ -56,13 +56,15 @@ export default function Navbar({
     };
   }, []);
 
+  console.log(pathname)
+
   return (
     <nav className="nav">
       <div className="toggle_btn" onClick={toggleSidebar}>
         <FaBars className="icons" />
       </div>
       <div className="page_title mb_hide">
-        <h1 className="capitalize text-white">{path === "" ? "Dashboard" : path}</h1>
+        <h1 className="capitalize text-white">{pathname === "" ? "Dashboard" : pathname?.split("/")[1]}</h1>
       </div>
       <div className="right_area">
         <div className="relative">

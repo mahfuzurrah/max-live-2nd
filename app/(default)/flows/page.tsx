@@ -3,8 +3,11 @@
 import data from "@/components/dashboard/card/CardData";
 import OverviewCard from "@/components/dashboard/card/OverviewCard";
 import ModelsTable from "@/components/dashboard/table/ModelsTable";
-import { ArrowProcess, MegGlass } from "@/public/svg/Icons";
-import { Select } from "antd";
+import { Button, Select } from "antd";
+import FilterIcon from "@/public/images/filter.svg";
+import Image from "next/image";
+import arrowProgress from "@/public/images/arrow-progress.svg"
+import magnifyingGlass from "@/public/images/magnifying-glass.svg"
 
 export default function ModelsPage() {
   return (
@@ -12,20 +15,17 @@ export default function ModelsPage() {
       {/* Header */}
       <div className="title-area">
         <div className="flex gap-3">
-          <MegGlass />
+          <Image src={magnifyingGlass} alt="magnifyingGlass" width={24} height={24} />
           <h3 className="text-white">Overview</h3>
         </div>
-        <Select
-          defaultValue="This month"
-          style={{
-            width: 132,
-          }}
-          className="select"
-          options={[{ value: "This month", label: "This month" }]}
-        />
+        
+        <select className="w-40 py-1 border-2 border-white text-gray-900 text-lg rounded-xl font-bold bg-transparent focus:ring-blue-500 focus:border-blue-500 block">
+          <option value="This month">This month</option>
+          <option value="This year">This year</option>
+        </select>
       </div>
       {/* card */}
-      <div className="overview-cards max_live_card bg-white">
+      <div className="overview-cards max_live_card bg-white/80">
         {data.map((item, index) => (
           <OverviewCard
             key={index}
@@ -34,23 +34,24 @@ export default function ModelsPage() {
             number={item.number}
             gain={item.gain}
           />
-        ))}
+        ))} 
       </div>
-      <div className="flex items-center justify-between">
+
+      <div className="flex items-center justify-between mb-3">
         <h3 className="flex gap-4 py-4">
-          <ArrowProcess />
+          <Image src={arrowProgress} alt="" width={24} height={24} />
           <span className="text-white">My flows</span>
         </h3>
-        <Select
-          defaultValue="This month"
-          style={{
-            width: 132,
-          }}
-          className="select"
-          options={[{ value: "This month", label: "This month" }]}
-        />
+        <div className="flex gap-3">
+          <Button type="primary" className="rounded-xl">Create</Button>
+          <Button className="wallet-btn">
+            <Image src={FilterIcon} alt="" width={24} height={24} />
+            Filter
+          </Button>
+        </div>
       </div>
-      <div className="mt-5 table_area">
+
+      <div className="table_area bg-white/80">
         <ModelsTable />
       </div>
     </div>

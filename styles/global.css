@@ -21,5 +21,14 @@
 }
 
 .active .nav-link {
-  background: url("../public/images/nav-gradient-bg.png") lightgray 50% / cover no-repeat !important;
+  background: url("../public/images/nav-gradient-bg.png") lightgray 50% / cover
+    no-repeat !important;
+}
+
+.table_area .ant-table {
+  background-color: transparent !important;
+}
+
+.table_area .ant-table-cell {
+  background-color: transparent !important;
 }
