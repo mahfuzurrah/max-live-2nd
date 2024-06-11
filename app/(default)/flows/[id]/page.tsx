@@ -1,7 +1,6 @@
 "use client";
 
-import UpdateFlowFlowItem from "@/components/dashboard/UpdateFlowItem";
-import ReactFlowContainer from "@/components/ReactFlowContainer";
+import ReactFlowContainer from "@/components/dashboard/flow/ReactFlowContainer";
 import { addFlowNode, setFlowSidePane } from "@/lib/features/flow/flowSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";

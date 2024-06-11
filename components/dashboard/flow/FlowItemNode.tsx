@@ -212,8 +212,8 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
             <Handle className="opacity-0" id="t-l" type="target" position={Position.Left} />
             <Handle className="opacity-0" id="t-r" type="target" position={Position.Right} />
 
-            <div className="relative flex items-center gap-4 border-2 border-stone-700 rounded-2xl bg-white">
-                <div className="flex flex-col gap-1 items-center justify-between p-5 rounded-md m-2">
+            <div className="relative flex items-center gap-4 bg-white">
+                <div className="flex flex-col gap-1 items-center justify-between p-5 rounded-md m-5 border-2 border-stone-700 rounded-2xl">
                     <div className="h-6">
                         <Image src={icon} alt="" width={24} height={24} />
                     </div>
