@@ -2,7 +2,7 @@
 
 import UpdateFlowFlowItem from "@/components/dashboard/UpdateFlowItem";
 import ReactFlowContainer from "@/components/ReactFlowContainer";
-import { addFlowNode } from "@/lib/features/flow/flowSlice";
+import { addFlowNode, setFlowSidePane } from "@/lib/features/flow/flowSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 // Importing required images and components
@@ -35,6 +35,10 @@ const FlowDetails: React.FC = () => {
   const [shakingIndex, setShakingIndex] = useState<number | null>(null);
   const [droppedFlowItems, setDroppedFlowItems] = useState<FlowItem[]>([]);
 
+  function handleSaveFlow() {
+    dispatch(setFlowSidePane(null))
+    router.push("/flows")
+  }
 
   // Event handler for dropping an item outside the graph area
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -102,8 +106,8 @@ const FlowDetails: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button type="primary" className="rounded-xl">Save</Button>
-            <Button type="primary" className="rounded-xl">Run</Button>
+            <Button type="primary" className="rounded-xl" onClick={handleSaveFlow}>Save</Button>
+            <Button type="primary" className="rounded-xl" onClick={() => dispatch(setFlowSidePane("Running Flow"))}>Run</Button>
             <Button className="wallet-btn">
               <Image src={FilterIcon} alt="" width={24} height={24} />
               Filter

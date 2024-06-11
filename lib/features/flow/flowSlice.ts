@@ -6,18 +6,20 @@ interface IMutateFlowNode {
     index: number
 }
 
+type SidePaneFlowType = "Ask AI" | "Document" | "Link" | "For each" | "Running Flow" | null;
+
 interface FlowState {
     flowNodesList: IFlowItemNode[];
     flowEdgesList: IFlowEdgeData[];
     editFlowItem: IFlowItemNode | null;
-    flowItemSidePane: "Ask AI" | "Document" | "Link" | "For each" | null;
+    flowItemSidePane: SidePaneFlowType
 }
 
 const initialState: FlowState = {
     flowNodesList: [],
     flowEdgesList: [],
     editFlowItem: null,
-    flowItemSidePane: null
+    flowItemSidePane: "Running Flow"
 }
 
 export const flowSlice = createSlice({
@@ -33,7 +35,7 @@ export const flowSlice = createSlice({
         setEditMode: (state, action: PayloadAction<IFlowItemNode | null>) => {
             state.editFlowItem = action.payload
         },
-        setFlowSidePane: (state, action: PayloadAction<"Ask AI" | "Document" | "Link" | "For each" | null>) => {
+        setFlowSidePane: (state, action: PayloadAction<SidePaneFlowType>) => {
             state.flowItemSidePane = action.payload
         },
         onFlowNodesChange: (state, action: PayloadAction<IFlowItemNode[]>) => {

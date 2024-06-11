@@ -105,7 +105,7 @@ export default function DashboardSidebar({
     <div className={`side_navbar ${isOpen ? "" : "sider-collapsed"}`}>
       <div className="flex gap-5">
         <NvLogo className="icons" />
-        <Image src={logo} alt="Logo" className="w-32 h-full" />
+        <Image src={logo} alt="Logo" className="w-36 h-full" />
       </div>
       <ul className="side_nav_menu">
         {menuItems?.map((item) => (

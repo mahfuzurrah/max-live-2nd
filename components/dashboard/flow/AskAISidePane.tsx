@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import gradientBg from "@/public/images/gradient-background.png";
-import { IFlowItemNode } from "@/types";
 import { Button, Input, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Image from "next/image";

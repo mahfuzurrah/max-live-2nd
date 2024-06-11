@@ -19,7 +19,7 @@ export default function ModelsPage() {
           <h3 className="text-white">Overview</h3>
         </div>
         
-        <select className="w-40 py-1 border-2 border-white text-gray-900 text-lg rounded-xl font-bold bg-transparent focus:ring-blue-500 focus:border-blue-500 block">
+        <select className="py-1 border-2 border-white text-[#2c2e30] text-sm rounded-xl font-bold bg-transparent focus:ring-blue-500 focus:border-blue-500 block">
           <option value="This month">This month</option>
           <option value="This year">This year</option>
         </select>
