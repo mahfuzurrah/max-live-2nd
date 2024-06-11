@@ -1,4 +1,5 @@
-import logo from "@/public/images/P-logo.svg";
+// import logo from "@/public/images/P-logo.svg";
+import logo from "@/public/images/logo.png";
 import { NvLogo } from "@/public/svg/Icons";
 import { Render } from "keep-render";
 import Image from "next/image";
@@ -104,7 +105,7 @@ export default function DashboardSidebar({
     <div className={`side_navbar ${isOpen ? "" : "sider-collapsed"}`}>
       <div className="flex gap-5">
         <NvLogo className="icons" />
-        <Image src={logo} alt="Logo" className="w-10 h-full" />
+        <Image src={logo} alt="Logo" className="w-32 h-full" />
       </div>
       <ul className="side_nav_menu">
         {menuItems?.map((item) => (

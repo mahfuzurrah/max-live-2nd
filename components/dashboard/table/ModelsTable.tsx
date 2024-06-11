@@ -59,7 +59,11 @@ const columns: ColumnsType<ModelData> = [
     title: "Run",
     key: "autoTrain",
     width: 100,
-    render: () => <Button className="rounded-2xl" type="primary">Run</Button>,
+    render: (text, record) => (
+      <Link href={`/flows/${record.key}`} className="flex items-center ">
+        <Button className="rounded-2xl" type="primary">Run</Button>
+      </Link>
+    ),
   },
 ];
 

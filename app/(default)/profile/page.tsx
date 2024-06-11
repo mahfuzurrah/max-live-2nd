@@ -14,14 +14,14 @@ const Profile = () => {
       <div className="flex flex-col gap-8 p-4 ">
         <div className="">
           <div className="flex items-center gap-3 mb-4">
-            <Image className="rounded-full" src={user} alt="user" />
+            <Image className="rounded-full" src={userIcon} alt="user" />
             <h3 className="text-white">Information</h3>
           </div>
 
           <div className="bg-white/50 rounded-xl p-5">
             <div className="flex justify-between items-center">
-              <div>
-                <Avatar size={64} icon={<UserOutlined />} />
+              <div className="flex justify-center items-center">
+                <Image className="rounded-full" width={70} src={user} alt="user" />
                 <Button
                   className="mt-4 ml-3 disabled:bg-blue-primary disabled:text-white disabled:cursor-not-allowed disabled:opacity-50"
                   type="primary"

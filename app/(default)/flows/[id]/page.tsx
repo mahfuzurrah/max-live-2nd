@@ -23,7 +23,10 @@ import gradientBg from "@/public/images/gradient-background.png";
 import FlowItemSidePane from "@/components/dashboard/flow/FlowItemsSidePane";
 import FlowItemSideActionModal from "@/components/dashboard/flow/FlowItemSideActionModal";
 
+import { useRouter } from 'next/navigation'
+
 const FlowDetails: React.FC = () => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
 
   const { flowItemSidePane } = useAppSelector((state: RootState) => state.flow)
@@ -77,7 +80,7 @@ const FlowDetails: React.FC = () => {
   return (
     <div className="p-4">
       <div>
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           <h3>#FlowName</h3>
           <div className="flex gap-4">
             <Select
@@ -85,6 +88,22 @@ const FlowDetails: React.FC = () => {
               className="select"
               options={[{ value: "This month", label: "This month" }]}
             />
+            <Button className="wallet-btn">
+              <Image src={FilterIcon} alt="" width={24} height={24} />
+              Filter
+            </Button>
+          </div>
+        </div> */}
+
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <Button type="primary" className="rounded-xl" onClick={() => router.back()}>Back</Button>
+            <h4>Tax Analysis</h4>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Button type="primary" className="rounded-xl">Save</Button>
+            <Button type="primary" className="rounded-xl">Run</Button>
             <Button className="wallet-btn">
               <Image src={FilterIcon} alt="" width={24} height={24} />
               Filter
