@@ -99,7 +99,7 @@ const Profile = () => {
                     />
                   </Form.Item>
                 </div>
-                <Button type="primary" className="rounded-lg">
+                <Button onClick={() => setChangePasswordSection(false)} type="primary" className="rounded-lg">
                   Save
                 </Button>
               </Form>
