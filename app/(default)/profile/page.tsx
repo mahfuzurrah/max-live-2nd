@@ -1,6 +1,6 @@
 "use client";
+
 import { LockIcon, UserLogo } from "@/public/svg/Icons";
-import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Form, Input } from "antd";
 import userIcon from "@/public/images/user.svg"
 import Image from "next/image";
@@ -39,21 +39,21 @@ const Profile = () => {
                 <Form.Item label="Name" className="w-full col-span-12 md:col-span-4">
                   <Input
                     placeholder="Name"
-                    className="border-0 hover:border rounded-xl"
+                    className="border-transparent rounded-xl"
                     value="John"
                   />
                 </Form.Item>
                 <Form.Item label="Surname" className="w-full col-span-12 md:col-span-4">
                   <Input
                     placeholder="Surname"
-                    className="hover:border rounded-xl"
+                    className="border-transparent rounded-xl"
                     value="Frenetick"
                   />
                 </Form.Item>
                 <Form.Item label="Email" className="w-full col-span-12 md:col-span-4">
                   <Input
                     placeholder="Email"
-                    className="hover:border rounded-xl"
+                    className="border-transparent rounded-xl"
                     value="john.frenetick@primavera.com"
                   />
                 </Form.Item>
@@ -84,7 +84,7 @@ const Profile = () => {
                       <Input
                         type="password"
                         placeholder="**********"
-                        className="rounded-xl"
+                        className="border-transparent rounded-xl"
                       />
                     </Form.Item>
                   </div>
@@ -95,7 +95,7 @@ const Profile = () => {
                     <Input
                       type="password"
                       placeholder="**********"
-                      className="rounded-xl"
+                      className="border-transparent rounded-xl"
                     />
                   </Form.Item>
                 </div>
@@ -105,7 +105,6 @@ const Profile = () => {
               </Form>
             </div>
           </div>}
-
       </div>
     </>
   );

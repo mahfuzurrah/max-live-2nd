@@ -53,7 +53,7 @@ const columns: ColumnsType<ModelData> = [
     title: "API Key",
     key: "active",
     width: 250,
-    render: (text) => <Input size="small" className="bg-transparent border-none" value={text} type="password" />,
+    render: (text) => <Input size="small" className="bg-transparent border-transparent rounded-xl" value={text} type="password" />,
   },
   {
     title: "Active",
