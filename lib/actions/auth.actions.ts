@@ -4,10 +4,9 @@ import { getServerSession } from "next-auth/next"
 import { Account, Profile } from "next-auth"
 import { redirect } from "next/navigation"
 import bcrypt from "bcrypt"
-import { nextauthOptions } from "@/lib/nextauth-options"
-import connectDB from "@/lib/mongodb"
 import User from "@/lib/models/user.model"
-import mongoose from "mongoose"
+import connectDB from "../mongodb"
+import { nextauthOptions } from "../nextauth-options"
 
 export async function getUserSession() {
   const session = await getServerSession(nextauthOptions)

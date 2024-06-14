@@ -1,4 +1,4 @@
-import Header from "@/components/ui/header";
+import Header from "@/components/landing-page/ui/header";
 
 export default function AuthLayout({
   children,

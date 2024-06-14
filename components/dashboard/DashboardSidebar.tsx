@@ -1,5 +1,4 @@
-// import logo from "@/public/images/P-logo.svg";
-import logo from "@/public/images/logo.png";
+import logo from "@/public/images/dashboard-logo.png";
 import { NvLogo } from "@/public/svg/Icons";
 import { Render } from "keep-render";
 import Image from "next/image";
@@ -66,7 +65,7 @@ export default function DashboardSidebar({
       id: 1,
       label: "Dashboard",
       icon: <IoGrid className="icons" />,
-      route: "/",
+      route: "/dashboard",
     },
     {
       id: 7,

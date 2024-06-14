@@ -28,6 +28,13 @@ export const userSignUpValidation = z
     message: "Password do not match",
   })
 
+  export const userWaitingListValidation = z
+  .object({
+    email: z.string()
+      .min(1, "Email is required")
+      .email("Invalid email"),
+  })
+
 export const userUpdateValidation = z
   .object({
     name: z.string()
