@@ -8,8 +8,17 @@ import FilterIcon from "@/public/images/filter.svg";
 import Image from "next/image";
 import arrowProgress from "@/public/images/arrow-progress.svg"
 import magnifyingGlass from "@/public/images/magnifying-glass.svg"
+import { useAppDispatch } from "@/lib/hooks";
+import { useEffect } from "react";
+import { setNavbarTitle } from "@/lib/features/common/commonSlice";
 
 export default function ModelsPage() {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(setNavbarTitle("Flows"))
+  }, [])
+
   return (
     <div className="models-page">
       {/* Header */}

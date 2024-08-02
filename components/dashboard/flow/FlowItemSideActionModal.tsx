@@ -10,12 +10,12 @@ export default function FlowItemSideActionModal() {
     const { flowItemSidePane } = useAppSelector((state: RootState) => state.flow)
 
     return (
-        <>
+        <div className='absolute right-4 top-4'>
             {flowItemSidePane === "Ask AI" && <AskAISidePane />}
             {flowItemSidePane === "Document" && <DocumentSidePane />}
             {flowItemSidePane === "Link" && <LinkSidePane />}
             {flowItemSidePane === "For each" && <ForEachSidePane />}
             {flowItemSidePane === "Running Flow" && <RunningFlowsItem />}
-        </>
+        </div>
     )
 }

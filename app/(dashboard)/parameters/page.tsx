@@ -9,7 +9,9 @@ import brainCircuit from "@/public/images/brain-circuit.svg"
 import userImage from "@/public/images/Avatar.svg";
 import { ColumnsType } from "antd/es/table";
 import { StaticImageData } from "next/image";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { useAppDispatch } from "@/lib/hooks";
+import { setNavbarTitle } from "@/lib/features/common/commonSlice";
 
 interface ModelData {
   key: string;
@@ -32,10 +34,10 @@ const columns: ColumnsType<ModelData> = [
     title: "Model name",
     dataIndex: "modelName",
     render: (text, record) => (
-      <Link href={`/flows/${record.key}`} className="flex items-center ">
+      <div className="flex items-center ">
         <Image src={record.flowImage.src} width={50} height={50} alt="" />
         <span style={{ marginLeft: 10 }} className="text-[#353c45] font-bold">{text}</span>
-      </Link>
+      </div>
     ),
   },
   {
@@ -46,7 +48,7 @@ const columns: ColumnsType<ModelData> = [
   {
     title: "Runned",
     dataIndex: "runned",
-      render: (text) => <p className="text-[#2C2E30] font-bold">{text}</p>,
+    render: (text) => <p className="text-[#2C2E30] font-bold">{text}</p>,
     sorter: (a, b) => Number(a.runned) - Number(b.runned),
   },
   {
@@ -94,6 +96,12 @@ const onChange = (pagination: any, filters: any, sorter: any) => {
 };
 
 const Parameters = () => {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(setNavbarTitle("Parameters"))
+  }, [])
+
   return (
     <div className=" p-4">
       <h3 className="flex gap-4">
@@ -103,7 +111,9 @@ const Parameters = () => {
 
       <div className="flex flex-col gap-8 mt-5">
         <div className="flex items-center justify-between mb-3">
-          <Button className="rounded-xl" type="primary">Add a new model</Button>
+          <Link href="/parameters/create">
+            <Button className="rounded-xl" type="primary">Add a new model</Button>
+          </Link>
           <Button className="wallet-btn">
             <Image src={FilterIcon} alt="" width={24} height={24} />
             Filter

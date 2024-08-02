@@ -28,15 +28,15 @@ export default function RunningFlowsItem() {
     }
 
     return (
-        <div className='p-4 rounded-2xl'
+        <div className='p-4 rounded-2xl w-full max-w-[40rem] h-[70vh] overflow-y-scroll'
             style={{
                 backgroundImage: `url(${gradientBg.src})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: "no-repeat"
             }}>
-            <div className='w-[40rem]'>
-                <div>
+            <div className=''>
+                <>
                     <h3 className="text-white text-sm text-center">Running #FlowName</h3>
 
                     <div className="bg-white rounded-xl py-8 mt-3 flex flex-col justify-center items-center">
@@ -61,17 +61,17 @@ export default function RunningFlowsItem() {
 
                         {
                             !loading &&
-                                <p className="h-[25vh] overflow-y-scroll">
-                                    Réponse: <br />
-                                    1. Avis de vérification <br />
-                                    InformationValeurDate avis de vérificationImpôts visésPériode viséeDate proposée premier RDVBrigade de contrôleDivision brigadeIdentité de l'inspecteurIdentité supérieur Hiérarchique <br />
-                                    2. Opérations de contrôles <br />
-                                    InformationValeurReport 1er rendez-vousDates RDV et synthèseRéunion de synthèse <br />
-                                    3. Présentation de la proposition de rectification <br />
-                                    InformationValeurDate de réception de la proposition de rectification18 décembre 2023Nature Procédure et ConséquencesProrogation de délai formulation observations de contribuable30 joursDate limite formulation observations de contribuableDélai de reprise <br />
-                                    4. Liste des rectifications <br />
-                                    InformationValeurListe des rectifications proposées par avec montantRappel de revenus de capitaux mobiliers: 2020 - 1 632 €, 2021 - 298 €; Rappel de revenus de sous-location Micro-BNC: 2020 - 8 963 €, 2021 - 9 009 €; Reprises de charges déductibles du revenu global: 2020 - 7 084 €, 2021 - 3 592 €Liste des rectifications proposées avec lois applicablesArticle 111 a du CGI pour les revenus de capitaux mobiliers; Article 156, II-2° ter du CGI pour les frais d’accueil des personnes âgées de plus de 75 ans <br />
-                                </p>
+                            <p className="h-[25vh] overflow-y-scroll">
+                                Réponse: <br />
+                                1. Avis de vérification <br />
+                                InformationValeurDate avis de vérificationImpôts visésPériode viséeDate proposée premier RDVBrigade de contrôleDivision brigadeIdentité de l'inspecteurIdentité supérieur Hiérarchique <br />
+                                2. Opérations de contrôles <br />
+                                InformationValeurReport 1er rendez-vousDates RDV et synthèseRéunion de synthèse <br />
+                                3. Présentation de la proposition de rectification <br />
+                                InformationValeurDate de réception de la proposition de rectification18 décembre 2023Nature Procédure et ConséquencesProrogation de délai formulation observations de contribuable30 joursDate limite formulation observations de contribuableDélai de reprise <br />
+                                4. Liste des rectifications <br />
+                                InformationValeurListe des rectifications proposées par avec montantRappel de revenus de capitaux mobiliers: 2020 - 1 632 €, 2021 - 298 €; Rappel de revenus de sous-location Micro-BNC: 2020 - 8 963 €, 2021 - 9 009 €; Reprises de charges déductibles du revenu global: 2020 - 7 084 €, 2021 - 3 592 €Liste des rectifications proposées avec lois applicablesArticle 111 a du CGI pour les revenus de capitaux mobiliers; Article 156, II-2° ter du CGI pour les frais d’accueil des personnes âgées de plus de 75 ans <br />
+                            </p>
                         }
                     </div>
 
@@ -86,7 +86,7 @@ export default function RunningFlowsItem() {
                             Export <FaFileExport className="text-[#96c0ff]" />
                         </Button>
                     </div>
-                </div>
+                </>
             </div>
         </div>
     )

@@ -1,50 +1,47 @@
 "use client";
-import { Button, Form, Input, Select, Switch } from "antd";
-import { SwitchChangeEventHandler } from "antd/es/switch";
-import { useState } from "react";
 
-const Create = () => {
-  const [activeSwitch, setActiveSwitch] = useState(false);
+import { Button, Input, Select, Switch } from "antd";
+import Image from "next/image";
+import Link from "next/link";
+import brainCircuit from "@/public/images/brain-circuit.svg"
 
-  const onChange: SwitchChangeEventHandler = (checked) => {
-    setActiveSwitch(checked);
-  };
+export default function CreateParameter() {
   return (
-    <div className=" m-4 border rounded-xl border-[#A698A433]/20  p-8">
-      <Form layout="vertical" className="">
-        <div className="justify-between w-full mt-4 md:flex">
-          <Form.Item label="Model Name" className="max-w-[315px] w-full">
-            <Select
-              placeholder="Model Name"
-              className="bg-[#000000] border-0 hover:border rounded-xl"
-            >
-              <Select.Option value="demo">Demo</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item label="API Key" className="max-w-[536px] w-full">
-            <Input
-              placeholder="apiKey"
-              className="bg-[#E9EBEE] border-0 hover:border rounded-xl"
-            />
-          </Form.Item>
+    <div className="flex flex-col gap-8 p-4">
+      <div className="flex items-center justify-between">
+        <div className="flex gap-2">
+          <Image src={brainCircuit} alt="" />
+          <h3 className="text-white">Models - New</h3>
         </div>
-        <div className="flex items-center gap-2 mb-4">
-          <p>Is Active ?</p>
-          <Switch
-            style={{
-              backgroundColor: activeSwitch ? "#0065FF" : "#bbbbbb",
-            }}
-            defaultChecked={activeSwitch}
-            checked={activeSwitch}
-            onChange={onChange}
-          />
-        </div>
-        <Button type="primary" size="small" className="rounded-lg">
-          Save
-        </Button>
-      </Form>
-    </div>
-  );
-};
+      </div>
 
-export default Create;
+      <div className="bg-white/50 rounded-xl p-5">
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-12 md:col-span-6">
+            <p className="text-[#2C2E30] font-bold mb-2">Model Name</p>
+            <Input size="large" value="LSTD" placeholder="Enter model name" className="max-w-md border-transparent rounded-xl" />
+          </div>
+          <div className="col-span-12 md:col-span-6">
+            <p className="text-[#2C2E30] font-bold mb-2">API Key</p>
+            <Input size="large" placeholder="Enter key" value="123456123456-123456-123456" className="border-transparent rounded-xl" />
+          </div>
+        </div>
+
+        <div className="flex gap-2 mt-5">
+          <p className="text-[#2C2E30] font-bold mb-2">Is active ?</p>
+          <Switch defaultChecked />
+        </div>
+
+        <div className="mt-5 flex justify-end gap-4">
+          <Link href="/parameters">
+            <Button className="rounded-xl" type="primary">Cancle</Button>
+          </Link>
+          <Link href="/parameters">
+            <Button className="rounded-xl" type="primary">Save</Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
+

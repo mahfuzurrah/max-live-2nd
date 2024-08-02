@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import flowReducer from "@/lib/features/flow/flowSlice"
+import commonReducer from "@/lib/features/common/commonSlice"
 
 export const store = configureStore({
     reducer: {
-        flow: flowReducer
+        flow: flowReducer,
+        common: commonReducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({

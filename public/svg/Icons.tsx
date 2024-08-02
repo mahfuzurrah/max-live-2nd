@@ -174,30 +174,30 @@ export const NvLogo = ({ className }: IconProps) => {
       <path
         d="M10 20H29"
         stroke="#2C2E30"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10 12H19"
         stroke="#A698A4"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10 28H19"
         stroke="#A698A4"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M25 15L30 20L25 25"
         stroke="#2C2E30"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

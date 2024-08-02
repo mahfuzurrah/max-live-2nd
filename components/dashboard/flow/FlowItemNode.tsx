@@ -5,7 +5,7 @@ import { Edge, Handle, MarkerType, Node, Position, getConnectedEdges } from "rea
 import Image from "next/image";
 import { FlowItemNodeData, IFlowItemNode } from "@/types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { addFlowEdge, addFlowNode, setEditMode, setFlowSidePane } from "@/lib/features/flow/flowSlice";
+import { addFlowEdge, addFlowNode, setFlowSidePane } from "@/lib/features/flow/flowSlice";
 import { RootState } from "@/lib/store";
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from "antd";
@@ -74,53 +74,6 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
 
         setAvailablePositions(positions);
     }, [flowEdgesList, data.id, flowNodesList]);
-
-    // useEffect(() => {
-    //     const connectedEdges = getConnectedEdges([data], flowEdgesList);
-    //     const positions = {
-    //         right: true,
-    //         bottom: true,
-    //         left: true,
-    //         top: true,
-    //     };
-
-    //     connectedEdges.forEach(edge => {
-    //         if (edge.source === data.id) {
-    //             switch (edge.sourceHandle) {
-    //                 case "s-r":
-    //                     positions.right = false;
-    //                     break;
-    //                 case "s-b":
-    //                     positions.bottom = false;
-    //                     break;
-    //                 case "s-l":
-    //                     positions.left = false;
-    //                     break;
-    //                 case "s-t":
-    //                     positions.top = false;
-    //                     break;
-    //             }
-    //         }
-    //         if (edge.target === data.id) {
-    //             switch (edge.targetHandle) {
-    //                 case "t-r":
-    //                     positions.right = false;
-    //                     break;
-    //                 case "t-b":
-    //                     positions.bottom = false;
-    //                     break;
-    //                 case "t-l":
-    //                     positions.left = false;
-    //                     break;
-    //                 case "t-t":
-    //                     positions.top = false;
-    //                     break;
-    //             }
-    //         }
-    //     });
-
-    //     setAvailablePositions(positions);
-    // }, [flowEdgesList, data]);
 
     function addTargetFlowItem(positionKey: "right" | "bottom" | "left" | "top") {
         const targetId = uuidv4();
@@ -202,18 +155,23 @@ export default function FlowItemNode({ data }: IFlowItemNodeProps) {
 
     return (
         <>
-            <Handle className="opacity-0" id="s-b" type="source" position={Position.Bottom} />
-            <Handle className="opacity-0" id="s-t" type="source" position={Position.Top} />
-            <Handle className="opacity-0" id="s-l" type="source" position={Position.Left} />
-            <Handle className="opacity-0" id="s-r" type="source" position={Position.Right} />
+            <Handle className="opacity-1" id="s-b" type="source" position={Position.Bottom}></Handle>
+            <Handle className="opacity-1" id="s-t" type="source" position={Position.Top} />
+            <Handle className="opacity-1" id="s-l" type="source" position={Position.Left} />
+            <Handle className="opacity-1" id="s-r" type="source" position={Position.Right} />
 
-            <Handle className="opacity-0" id="t-b" type="target" position={Position.Bottom} />
-            <Handle className="opacity-0" id="t-t" type="target" position={Position.Top} />
-            <Handle className="opacity-0" id="t-l" type="target" position={Position.Left} />
-            <Handle className="opacity-0" id="t-r" type="target" position={Position.Right} />
+            <Handle className={`${availablePositions.bottom ? "opacity-1" : "opacity-0"}`} id="t-b" type="target" position={Position.Bottom} />
+            <Handle className={`${availablePositions.top ? "opacity-1" : "opacity-0"}`} id="t-t" type="target" position={Position.Top} />
+            <Handle className={`${availablePositions.left ? "opacity-1" : "opacity-0"}`} id="t-l" type="target" position={Position.Left} />
+            <Handle className={`${availablePositions.right ? "opacity-1" : "opacity-0"}`} id="t-r" type="target" position={Position.Right} />
 
-            <div className="relative flex items-center gap-4 bg-white">
-                <div className="flex flex-col gap-1 items-center justify-between p-5 rounded-md m-5 border-2 border-stone-700 rounded-2xl">
+            <Handle className="opacity-0" id="s-b" type="source" position={Position.Bottom}>BS</Handle>
+            <Handle className="opacity-0" id="s-t" type="source" position={Position.Top}>TS</Handle>
+            <Handle className="opacity-0" id="s-l" type="source" position={Position.Left}>LS</Handle>
+            <Handle className="opacity-0" id="s-r" type="source" position={Position.Right}>RS</Handle>
+
+            <div className="relative flex items-center gap-4">
+                <div style={{ background: "#ffffff" }} className="flex flex-col gap-1 items-center justify-between p-5 m-5 border-2 border-stone-700 rounded-2xl">
                     <div className="h-6">
                         <Image src={icon} alt="" width={24} height={24} />
                     </div>

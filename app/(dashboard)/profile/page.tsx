@@ -1,14 +1,23 @@
 "use client";
 
-import { LockIcon, UserLogo } from "@/public/svg/Icons";
-import { Avatar, Button, Form, Input } from "antd";
-import userIcon from "@/public/images/user.png"
+import { LockIcon } from "@/public/svg/Icons";
+import { Button, Form, Input } from "antd";
+import userIcon from "@/public/images/user-profile.svg"
 import Image from "next/image";
 import user from "@/public/images/user.png"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "@/lib/hooks";
+import { setNavbarTitle } from "@/lib/features/common/commonSlice";
 
 const Profile = () => {
   const [changePasswordSection, setChangePasswordSection] = useState(false)
+
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(setNavbarTitle("Profile"))
+  }, [])
+
   return (
     <>
       <div className="flex flex-col gap-8 p-4 ">
